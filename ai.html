@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -132,8 +133,15 @@
         }
 
         @keyframes medibot-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
         }
 
         /* Messages Area */
@@ -169,6 +177,7 @@
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -243,9 +252,13 @@
         }
 
         @keyframes medibot-typing {
-            0%, 60%, 100% {
+
+            0%,
+            60%,
+            100% {
                 transform: translateY(0);
             }
+
             30% {
                 transform: translateY(-8px);
             }
@@ -436,133 +449,98 @@
             font-size: 13px;
         }
     </style>
+    <!-- Add to your webpage's <head> section -->
+    <link rel="stylesheet" href="path/to/medibot.css">
 </head>
+
 <body>
     <!-- ======================================
          DEMO PAGE (Remove when integrating)
          ====================================== -->
     <div class="demo-page">
-        <div class="demo-card">
-            <h1>🏥 MediBot AI Assistant - Ready to Integrate</h1>
-            <p>This is a standalone medical chatbot widget that can be easily integrated into ANY existing HTML page in your hospital system.</p>
-            <p><strong>Click the purple circle button in the bottom-right corner to try it!</strong></p>
 
-            <div class="demo-features">
-                <div class="demo-feature">
-                    <h3>🎯 Easy Integration</h3>
-                    <p>Copy-paste into any page. Works independently without affecting existing code.</p>
-                </div>
-                <div class="demo-feature">
-                    <h3>📱 Fully Responsive</h3>
-                    <p>Adapts to desktop, tablet, and mobile. Fullscreen on small devices.</p>
-                </div>
-                <div class="demo-feature">
-                    <h3>🩺 Medical Focus</h3>
-                    <p>AI trained to respond only to healthcare-related queries.</p>
-                </div>
-            </div>
-
-            <div class="demo-integration">
-                <h3>🚀 How to Integrate into Your Pages:</h3>
-                <p><strong>Step 1:</strong> Copy the entire <code>&lt;style&gt;</code> section (CSS) to your page's <code>&lt;head&gt;</code></p>
-                <p><strong>Step 2:</strong> Copy the <code>&lt;div class="medibot-widget"&gt;</code> section to your page's <code>&lt;body&gt;</code></p>
-                <p><strong>Step 3:</strong> Copy the <code>&lt;script&gt;</code> section before closing <code>&lt;/body&gt;</code></p>
-                <p><strong>Step 4:</strong> Add your Gemini API key in the script</p>
-                <p style="margin-top: 16px; padding: 12px; background: white; border-radius: 8px;">
-                    ✅ The widget is completely isolated with <code>medibot-</code> prefix<br>
-                    ✅ Won't conflict with your existing CSS/JS<br>
-                    ✅ Works on patient portal, doctor dashboard, QR registration, etc.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- ======================================
+        <!-- ======================================
          MEDIBOT WIDGET - COPY FROM HERE
          ====================================== -->
-    <div class="medibot-widget">
-        <!-- Floating Action Button -->
-        <button class="medibot-fab" id="medibotFab">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
-                <circle cx="9" cy="10" r="1.5"/>
-                <circle cx="15" cy="10" r="1.5"/>
-            </svg>
-        </button>
-
-        <!-- Chat Window -->
-        <div class="medibot-window" id="medibotWindow">
-            <!-- Header -->
-            <div class="medibot-header">
-                <div class="medibot-avatar">🩺</div>
-                <div class="medibot-info">
-                    <h3>MediBot Assistant</h3>
-                    <div class="medibot-status">
-                        <span class="medibot-status-dot"></span>
-                        <span>Online</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Messages -->
-            <div class="medibot-messages" id="medibotMessages">
-                <div class="medibot-message bot">
-                    <div class="medibot-message-avatar">🩺</div>
-                    <div class="medibot-message-bubble">
-                        Hello! I'm MediBot, your AI medical assistant. I can help you with:<br><br>
-                        • Symptom analysis<br>
-                        • Treatment information<br>
-                        • Appointment guidance<br>
-                        • Hospital services<br><br>
-                        How can I assist you today?
-                    </div>
-                </div>
-            </div>
-
-            <!-- Warning -->
-            <div class="medibot-warning">
+        <div class="medibot-widget">
+            <!-- Floating Action Button -->
+            <button class="medibot-fab" id="medibotFab">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
+                    <circle cx="9" cy="10" r="1.5" />
+                    <circle cx="15" cy="10" r="1.5" />
                 </svg>
-                <div>
-                    <strong>Disclaimer:</strong> This AI provides informational guidance only. Always consult a certified doctor for diagnosis.
-                </div>
-            </div>
+            </button>
 
-            <!-- Input -->
-            <div class="medibot-input-area">
-                <input 
-                    type="text" 
-                    class="medibot-input" 
-                    id="medibotInput" 
-                    placeholder="Type your medical question..."
-                    autocomplete="off"
-                />
-                <button class="medibot-send-btn" id="medibotSend">
+            <!-- Chat Window -->
+            <div class="medibot-window" id="medibotWindow">
+                <!-- Header -->
+                <div class="medibot-header">
+                    <div class="medibot-avatar">🩺</div>
+                    <div class="medibot-info">
+                        <h3>MediBot Assistant</h3>
+                        <div class="medibot-status">
+                            <span class="medibot-status-dot"></span>
+                            <span>Online</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Messages -->
+                <div class="medibot-messages" id="medibotMessages">
+                    <div class="medibot-message bot">
+                        <div class="medibot-message-avatar">🩺</div>
+                        <div class="medibot-message-bubble">
+                            Hello! I'm MediBot, your AI medical assistant. I can help you with:<br><br>
+                            • Symptom analysis<br>
+                            • Treatment information<br>
+                            • Appointment guidance<br>
+                            • Hospital services<br><br>
+                            How can I assist you today?
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Warning -->
+                <div class="medibot-warning">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
                     </svg>
-                </button>
+                    <div>
+                        <strong>Disclaimer:</strong> This AI provides informational guidance only. Always consult a
+                        certified doctor for diagnosis.
+                    </div>
+                </div>
+
+                <!-- Input -->
+                <div class="medibot-input-area">
+                    <input type="text" class="medibot-input" id="medibotInput"
+                        placeholder="Type your medical question..." autocomplete="off" />
+                    <button class="medibot-send-btn" id="medibotSend">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- ======================================
+        <!-- ======================================
          MEDIBOT SCRIPT - COPY THIS TOO
          ====================================== -->
-    <script>
-        (function() {
-            'use strict';
+        <script>
+            (function () {
+                'use strict';
 
-            // ==================== CONFIGURATION ====================
-            
-            // 🔑 PASTE YOUR GEMINI API KEY HERE
-            const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE";
-            
-            const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
-            
-            // Medical-only system prompt
-            const SYSTEM_PROMPT = `You are MediBot, an AI medical assistant in a hospital system. 
+                // ==================== CONFIGURATION ====================
+
+                // 🔑 PASTE YOUR GEMINI API KEY HERE
+                const GEMINI_API_KEY = "AIzaSyCe_3sX0PA4dRh0r7s7UzWD-ys0YePULH4";
+
+                const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
+
+                // Medical-only system prompt
+                const SYSTEM_PROMPT = `You are MediBot, an AI medical assistant in a hospital system. 
 
 STRICT RULES:
 1. ONLY respond to medical/healthcare queries:
@@ -581,182 +559,243 @@ STRICT RULES:
 
 5. Be empathetic, clear, and use simple language.
 
+6. If encountering technical issues, provide clear error messages.
+
 Keep responses concise and helpful.`;
 
-            // ==================== DOM ELEMENTS ====================
-            const fab = document.getElementById('medibotFab');
-            const window = document.getElementById('medibotWindow');
-            const messages = document.getElementById('medibotMessages');
-            const input = document.getElementById('medibotInput');
-            const sendBtn = document.getElementById('medibotSend');
+                // ==================== DOM ELEMENTS ====================
+                const fab = document.getElementById('medibotFab');
+                const window = document.getElementById('medibotWindow');
+                const messages = document.getElementById('medibotMessages');
+                const input = document.getElementById('medibotInput');
+                const sendBtn = document.getElementById('medibotSend');
 
-            // ==================== STATE ====================
-            let isOpen = false;
-            let conversationHistory = [];
+                // ==================== STATE ====================
+                let isOpen = false;
+                let conversationHistory = [];
 
-            // ==================== USER SESSION (Optional) ====================
-            // Connect this to your hospital's authentication system
-            let currentUser = {
-                type: null, // 'patient' or 'doctor'
-                name: null,
-                id: null,
-                isLoggedIn: false
-            };
-
-            // Call this function after user login in your system
-            window.setMediBotUser = function(userType, userName, userId) {
-                currentUser = {
-                    type: userType,
-                    name: userName,
-                    id: userId,
-                    isLoggedIn: true
-                };
-                
-                // Update greeting if chat is already open
-                if (isOpen && conversationHistory.length === 0) {
-                    updateGreeting();
-                }
-            };
-
-            // Call this on logout
-            window.clearMediBotUser = function() {
-                currentUser = {
-                    type: null,
+                // ==================== USER SESSION (Optional) ====================
+                // Connect this to your hospital's authentication system
+                let currentUser = {
+                    type: null, // 'patient' or 'doctor'
                     name: null,
                     id: null,
                     isLoggedIn: false
                 };
-                conversationHistory = [];
-            };
 
-            function updateGreeting() {
-                const greeting = currentUser.isLoggedIn
-                    ? `Hello ${currentUser.name}! I'm MediBot. How can I assist you with your health today?`
-                    : `Hello! I'm MediBot, your AI medical assistant. How can I help you today?`;
-                
-                const firstMsg = messages.querySelector('.medibot-message.bot .medibot-message-bubble');
-                if (firstMsg) {
-                    firstMsg.innerHTML = greeting;
-                }
-            }
+                // Call this function after user login in your system
+                window.setMediBotUser = function (userType, userName, userId) {
+                    currentUser = {
+                        type: userType,
+                        name: userName,
+                        id: userId,
+                        isLoggedIn: true
+                    };
 
-            // ==================== EVENT LISTENERS ====================
-            fab.addEventListener('click', toggleChat);
-            sendBtn.addEventListener('click', sendMessage);
-            input.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage();
-                }
-            });
-
-            // ==================== FUNCTIONS ====================
-            function toggleChat() {
-                isOpen = !isOpen;
-                window.classList.toggle('active');
-                fab.classList.toggle('active');
-                
-                if (isOpen) {
-                    input.focus();
-                    if (currentUser.isLoggedIn && conversationHistory.length === 0) {
+                    // Update greeting if chat is already open
+                    if (isOpen && conversationHistory.length === 0) {
                         updateGreeting();
                     }
+                };
+
+                // Call this on logout
+                window.clearMediBotUser = function () {
+                    currentUser = {
+                        type: null,
+                        name: null,
+                        id: null,
+                        isLoggedIn: false
+                    };
+                    conversationHistory = [];
+                };
+
+                function updateGreeting() {
+                    const greeting = currentUser.isLoggedIn
+                        ? `Hello ${currentUser.name}! I'm MediBot. How can I assist you with your health today?`
+                        : `Hello! I'm MediBot, your AI medical assistant. How can I help you today?`;
+
+                    const firstMsg = messages.querySelector('.medibot-message.bot .medibot-message-bubble');
+                    if (firstMsg) {
+                        firstMsg.innerHTML = greeting;
+                    }
                 }
-            }
 
-            function sendMessage() {
-                const text = input.value.trim();
-                if (!text) return;
-
-                // Validate API key
-                if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
-                    addBotMessage("⚠️ Error: Gemini API key not configured. Please add your API key in the code.");
-                    return;
-                }
-
-                addUserMessage(text);
-                input.value = '';
-                sendBtn.disabled = true;
-
-                const typingMsg = showTyping();
-
-                callGeminiAPI(text)
-                    .then(response => {
-                        typingMsg.remove();
-                        addBotMessage(response);
-                    })
-                    .catch(error => {
-                        typingMsg.remove();
-                        addBotMessage("I apologize, but I'm having trouble connecting. Please try again in a moment.");
-                        console.error('MediBot Error:', error);
-                    })
-                    .finally(() => {
-                        sendBtn.disabled = false;
-                        input.focus();
-                    });
-            }
-
-            async function callGeminiAPI(userMessage) {
-                const userContext = currentUser.isLoggedIn
-                    ? `\n\nCONTEXT: Speaking with ${currentUser.type} "${currentUser.name}" (ID: ${currentUser.id}).`
-                    : '';
-
-                const fullPrompt = SYSTEM_PROMPT + userContext + `\n\nUser: ${userMessage}\n\nAssistant:`;
-
-                const response = await fetch(GEMINI_API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{ text: fullPrompt }]
-                        }],
-                        generationConfig: {
-                            temperature: 0.7,
-                            topK: 40,
-                            topP: 0.95,
-                            maxOutputTokens: 1024,
-                        }
-                    })
+                // ==================== EVENT LISTENERS ====================
+                fab.addEventListener('click', toggleChat);
+                sendBtn.addEventListener('click', sendMessage);
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMessage();
+                    }
                 });
 
-                if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                // ==================== FUNCTIONS ====================
+                function toggleChat() {
+                    isOpen = !isOpen;
+                    window.classList.toggle('active');
+                    fab.classList.toggle('active');
 
-                const data = await response.json();
-                
-                if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-                    return data.candidates[0].content.parts[0].text;
+                    if (isOpen) {
+                        input.focus();
+                        if (currentUser.isLoggedIn && conversationHistory.length === 0) {
+                            updateGreeting();
+                        }
+                    }
                 }
-                throw new Error('Invalid API response');
-            }
 
-            function addUserMessage(text) {
-                const div = document.createElement('div');
-                div.className = 'medibot-message user';
-                div.innerHTML = `
+                const rateLimiter = {
+                    lastMessage: 0,
+                    minDelay: 1000, // 1 second between messages
+
+                    canSendMessage() {
+                        const now = Date.now();
+                        if (now - this.lastMessage < this.minDelay) {
+                            return false;
+                        }
+                        this.lastMessage = now;
+                        return true;
+                    }
+                };
+
+                function sendMessage() {
+                    const text = input.value.trim();
+                    if (!text) return;
+
+                    // Rate limiting
+                    if (!rateLimiter.canSendMessage()) {
+                        return;
+                    }
+
+                    // Validate API key
+                    if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE" || GEMINI_API_KEY === "") {
+                        addBotMessage("⚠️ Error: Gemini API key not configured. Please add your API key in the code.");
+                        return;
+                    }
+
+                    // Validate input length
+                    if (!validateInput(text)) return;
+
+                    addUserMessage(text);
+                    input.value = '';
+                    sendBtn.disabled = true;
+
+                    const typingMsg = showTyping();
+
+                    callGeminiAPI(text)
+                        .then(response => {
+                            typingMsg.remove();
+                            addBotMessage(response);
+                        })
+                        .catch(error => {
+                            typingMsg.remove();
+                            addBotMessage("I apologize, but I'm having trouble connecting. Please try again in a moment.");
+                            console.error('MediBot Error:', error);
+                        })
+                        .finally(() => {
+                            sendBtn.disabled = false;
+                            input.focus();
+                        });
+                }
+
+                // Fix 1: Standardize API Key
+                // const GEMINI_API_KEY = "YOUR_API_KEY_HERE"; // Use one consistent API key
+
+                // Fix 2: Add input validation
+                function validateInput(text) {
+                    const MAX_LENGTH = 500;
+                    if (text.length > MAX_LENGTH) {
+                        addBotMessage(`Please limit your message to ${MAX_LENGTH} characters.`);
+                        return false;
+                    }
+                    return true;
+                }
+
+                // Fix 3: Include conversation history in API calls
+                async function callGeminiAPI(userMessage) {
+                    // Get last few messages for context
+                    const recentHistory = conversationHistory.slice(-4);
+                    const conversationContext = recentHistory
+                        .map(msg => `${msg.role}: ${msg.text}`)
+                        .join('\n');
+
+                    const userContext = currentUser.isLoggedIn
+                        ? `\n\nCONTEXT: Speaking with ${currentUser.type} "${currentUser.name}" (ID: ${currentUser.id}).`
+                        : '';
+
+                    const fullPrompt = SYSTEM_PROMPT +
+                        userContext +
+                        `\n\nConversation History:\n${conversationContext}\n\nUser: ${userMessage}\n\nAssistant:`;
+
+                    const response = await fetch(GEMINI_API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{
+                                parts: [{ text: fullPrompt }]
+                            }],
+                            generationConfig: {
+                                temperature: 0.7,
+                                topK: 40,
+                                topP: 0.95,
+                                maxOutputTokens: 1024,
+                            }
+                        })
+                    });
+
+                    if (!response.ok) throw new Error(`API Error: ${response.status}`);
+
+                    const data = await response.json();
+
+                    if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+                        return data.candidates[0].content.parts[0].text;
+                    }
+                    throw new Error('Invalid API response');
+                }
+
+                // Fix 4: More specific error handling
+                async function callGeminiAPI(userMessage) {
+                    try {
+                        // ... existing API call code ...
+                    } catch (error) {
+                        if (error.message.includes('API Error: 429')) {
+                            return "I'm receiving too many requests right now. Please try again in a moment.";
+                        } else if (error.message.includes('API Error: 401')) {
+                            return "There's an authentication issue. Please contact support.";
+                        } else {
+                            return "I'm having trouble processing your request. Please try again.";
+                        }
+                    }
+                }
+
+                function addUserMessage(text) {
+                    const div = document.createElement('div');
+                    div.className = 'medibot-message user';
+                    div.innerHTML = `
                     <div class="medibot-message-avatar">👤</div>
                     <div class="medibot-message-bubble">${escapeHtml(text)}</div>
                 `;
-                messages.appendChild(div);
-                scrollToBottom();
-                conversationHistory.push({ role: 'user', text });
-            }
+                    messages.appendChild(div);
+                    scrollToBottom();
+                    conversationHistory.push({ role: 'user', text });
+                }
 
-            function addBotMessage(text) {
-                const div = document.createElement('div');
-                div.className = 'medibot-message bot';
-                div.innerHTML = `
+                function addBotMessage(text) {
+                    const div = document.createElement('div');
+                    div.className = 'medibot-message bot';
+                    div.innerHTML = `
                     <div class="medibot-message-avatar">🩺</div>
                     <div class="medibot-message-bubble">${formatMessage(text)}</div>
                 `;
-                messages.appendChild(div);
-                scrollToBottom();
-                conversationHistory.push({ role: 'bot', text });
-            }
+                    messages.appendChild(div);
+                    scrollToBottom();
+                    conversationHistory.push({ role: 'bot', text });
+                }
 
-            function showTyping() {
-                const div = document.createElement('div');
-                div.className = 'medibot-message bot';
-                div.innerHTML = `
+                function showTyping() {
+                    const div = document.createElement('div');
+                    div.className = 'medibot-message bot';
+                    div.innerHTML = `
                     <div class="medibot-message-avatar">🩺</div>
                     <div class="medibot-message-bubble">
                         <div class="medibot-typing">
@@ -766,33 +805,74 @@ Keep responses concise and helpful.`;
                         </div>
                     </div>
                 `;
-                messages.appendChild(div);
-                scrollToBottom();
-                return div;
-            }
+                    messages.appendChild(div);
+                    scrollToBottom();
+                    return div;
+                }
 
-            function formatMessage(text) {
-                text = escapeHtml(text);
-                text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                text = text.replace(/\n/g, '<br>');
-                return text;
-            }
+                function formatMessage(text) {
+                    text = escapeHtml(text);
+                    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                    text = text.replace(/\n/g, '<br>');
+                    return text;
+                }
 
-            function escapeHtml(text) {
-                const div = document.createElement('div');
-                div.textContent = text;
-                return div.innerHTML;
-            }
+                function escapeHtml(text) {
+                    const div = document.createElement('div');
+                    div.textContent = text;
+                    return div.innerHTML;
+                }
 
-            function scrollToBottom() {
-                messages.scrollTop = messages.scrollHeight;
-            }
+                function scrollToBottom() {
+                    messages.scrollTop = messages.scrollHeight;
+                }
 
-            // ==================== INITIALIZATION ====================
-            console.log('🩺 MediBot Widget Loaded');
-            console.log('📝 Add API key: GEMINI_API_KEY');
-            console.log('🔗 Integration: setMediBotUser(type, name, id)');
-        })();
+                // ==================== INITIALIZATION ====================
+                console.log('🩺 MediBot Widget Loaded');
+                console.log("📝 Add API key: AIzaSyCe_3sX0PA4dRh0r7s7UzWD-ys0YePULH4 ");
+                console.log('🔗 Integration: setMediBotUser(type, name, id)');
+            })();
+        </script>
+        <script>
+            const express = require('express');
+            const app = express();
+
+            app.use((req, res, next) => {
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+                res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+                next();
+            });
+
+            // Your existing routes and middleware here
+
+            const PORT = process.env.PORT || 3000;
+            app.listen(PORT, () => {
+                console.log(`Server is running on port ${PORT}`);
+            });
+        </script>
+    </div>
+    <!-- Add at the end of your webpage's <body> -->
+    <div id="medibot-container"></div>
+    <script src="path/to/medibot.js"></script>
+    <script>
+        // Initialize MediBot with configuration
+        window.addEventListener('load', () => {
+            const medibotConfig = {
+                apiKey: 'YOUR_GEMINI_API_KEY',
+                container: 'medibot-container',
+                theme: 'light', // or 'dark'
+                position: 'right' // or 'left'
+            };
+
+            MediBot.init(medibotConfig);
+        });
+
+        window.addEventListener('medibot-error', (event) => {
+            console.error('MediBot Error:', event.detail);
+            // Send to your error tracking system
+        });
     </script>
 </body>
+
 </html>
