@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Queue Management - மருத்துவமனை வரிசை மேலாண்மை</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Language Toggle Button */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .lang-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .lang-icon {
+            font-size: 1.2em;
+        }
+
+        /* Landing Section */
+        .landing-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .landing-section h1 {
+            color: #1976d2;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+        }
+
+        .qr-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .qr-container img {
+            border: 5px solid white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .qr-instruction {
+            margin: 20px 0;
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        /* Registration Form Section */
+        .form-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .form-section h2 {
+            color: #1976d2;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1976d2;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Confirmation Section */
+        .confirmation-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            display: none;
+            text-align: center;
+        }
+
+        .confirmation-section.active {
+            display: block;
+            animation: bounceIn 0.6s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            50% { transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .success-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-section h2 {
+            color: #4caf50;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+
+        .token-display {
+            background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .queue-info {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .queue-info-text {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .queue-status {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .queue-status h3 {
+            margin-bottom: 15px;
+            color: #1976d2;
+        }
+
+        .queue-number {
+            font-size: 3em;
+            color: #1976d2;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .landing-section h1 {
+                font-size: 1.6em;
+            }
+
+            .form-section {
+                padding: 25px;
+            }
+
+            .btn-primary {
+                padding: 12px 30px;
+                font-size: 1em;
+            }
+
+            .language-toggle {
+                top: 10px;
+                right: 10px;
+            }
+
+            .lang-btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle Button -->
+    <div class="language-toggle">
+        <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">
+            <span class="lang-icon">🌐</span>
+            <span id="langBtnText">தமிழ்</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <!-- Landing Section with QR Code -->
+        <section class="landing-section" id="landing">
+            <h1 id="mainHeading">🏥 Scan to Register for Consultation</h1>
+            
+            <div class="qr-container">
+                <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=https://yourwebsite.com/queue_system.html" alt="Scan to Register">
+            </div>
+            
+            <p class="qr-instruction" id="qrInstruction">Scan the QR code or click the button below</p>
+            
+            <button class="btn-primary" id="startRegBtn" onclick="scrollToForm()">Start Registration</button>
+        </section>
+
+        <!-- Patient Registration Form -->
+        <section class="form-section" id="registrationForm">
+            <h2 id="formHeading">Patient Registration</h2>
+            
+            <form id="patientForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label id="nameLabel">Name</label>
+                    <input type="text" id="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label id="ageLabel">Age</label>
+                    <input type="number" id="age" min="1" max="120" required>
+                </div>
+
+                <div class="form-group">
+                    <label id="genderLabel">Gender</label>
+                    <select id="gender" required>
+                        <option value="" id="selectOption">Select</option>
+                        <option value="Male" id="maleOption">Male</option>
+                        <option value="Female" id="femaleOption">Female</option>
+                        <option value="Other" id="otherOption">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label id="deptLabel">Department</label>
+                    <select id="department" required>
+                        <option value="" id="selectDeptOption">Select</option>
+                        <option value="GEN" id="genOption">General</option>
+                        <option value="ENT" id="entOption">ENT</option>
+                        <option value="CAR" id="carOption">Cardiology</option>
+                        <option value="ORT" id="ortOption">Orthopedics</option>
+                        <option value="PED" id="pedOption">Pediatrics</option>
+                        <option value="DER" id="derOption">Dermatology</option>
+                        <option value="NEU" id="neuOption">Neurology</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label id="contactLabel">Contact Number</label>
+                    <input type="tel" id="contact" pattern="[0-9]{10}" placeholder="10 digit number" required>
+                </div>
+
+                <div class="form-group">
+                    <label id="symptomsLabel">Symptoms / Reason for Visit</label>
+                    <textarea id="symptoms" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" id="submitBtn">Submit Registration</button>
+            </form>
+        </section>
+
+        <!-- Confirmation Section -->
+        <section class="confirmation-section" id="confirmation">
+            <div class="success-icon">✅</div>
+            <h2 id="successHeading">Registration Successful!</h2>
+            
+            <div class="token-display">
+                <span id="tokenLabel">Your Token Number</span><br>
+                <span id="tokenNumber" style="font-size: 1.2em;"></span>
+            </div>
+            
+            <div class="queue-info">
+                <p class="queue-info-text">
+                    <strong id="peopleBeforeLabel">People before you:</strong>
+                </p>
+                <div class="queue-number" id="queuePosition">0</div>
+            </div>
+
+            <button class="btn-secondary" id="refreshBtn" onclick="checkQueueStatus()">
+                Refresh Queue Status
+            </button>
+
+            <div class="queue-status" id="queueStatus" style="display: none;">
+                <h3 id="liveQueueHeading">Live Queue Updates</h3>
+                <p id="statusMessage"></p>
+            </div>
+
+            <button class="btn-primary" id="registerAnotherBtn" onclick="registerAnother()" style="margin-top: 20px;">
+                Register Another Patient
+            </button>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p id="footerText">&copy; 2025 Hospital Queue Management System</p>
+        </footer>
+    </div>
+
+    <script>
+        /*
+        ═══════════════════════════════════════════════════════════════
+        MULTI-LANGUAGE SUPPORT SYSTEM
+        ═══════════════════════════════════════════════════════════════
+        
+        This system allows instant language switching without page reload.
+        The selected language is saved in localStorage and persists across sessions.
+        
+        HOW TO ADD MORE LANGUAGES:
+        --------------------------
+        1. Add a new language object to the 'translations' object below
+        2. Copy the structure from 'en' or 'ta'
+        3. Translate all text values to your new language
+        4. Update the toggleLanguage() function to cycle through languages
+        
+        Example for adding Hindi:
+        translations.hi = {
+            mainHeading: "परामर्श के लिए पंजीकरण करने के लिए स्कैन करें",
+            ... (add all other translations)
+        };
+        */
+
+        // Language translations object
+        const translations = {
+            en: {
+                langBtn: 'தமிழ்',
+                mainHeading: '🏥 Scan to Register for Consultation',
+                qrInstruction: 'Scan the QR code or click the button below',
+                startRegBtn: 'Start Registration',
+                formHeading: 'Patient Registration',
+                nameLabel: 'Name',
+                ageLabel: 'Age',
+                genderLabel: 'Gender',
+                selectOption: 'Select',
+                maleOption: 'Male',
+                femaleOption: 'Female',
+                otherOption: 'Other',
+                deptLabel: 'Department',
+                selectDeptOption: 'Select',
+                genOption: 'General',
+                entOption: 'ENT',
+                carOption: 'Cardiology',
+                ortOption: 'Orthopedics',
+                pedOption: 'Pediatrics',
+                derOption: 'Dermatology',
+                neuOption: 'Neurology',
+                contactLabel: 'Contact Number',
+                symptomsLabel: 'Symptoms / Reason for Visit',
+                submitBtn: 'Submit Registration',
+                successHeading: 'Registration Successful!',
+                tokenLabel: 'Your Token Number',
+                peopleBeforeLabel: 'People before you:',
+                refreshBtn: 'Refresh Queue Status',
+                liveQueueHeading: 'Live Queue Updates',
+                registerAnotherBtn: 'Register Another Patient',
+                footerText: '© 2025 Hospital Queue Management System',
+                yourTurn: '🎉 It\'s your turn! Please proceed to the consultation room.',
+                youreNext: '⏳ You\'re next! Please be ready.',
+                peopleBeforeYou: 'ℹ️ There are <strong>{{count}}</strong> people before you.'
+            },
+            ta: {
+                langBtn: 'English',
+                mainHeading: '🏥 ஆலோசனைக்கு பதிவு செய்ய ஸ்கேன் செய்யவும்',
+                qrInstruction: 'QR குறியீட்டை ஸ்கேன் செய்யவும் அல்லது கீழே உள்ள பொத்தானைக் கிளிக் செய்யவும்',
+                startRegBtn: 'பதிவு தொடங்கு',
+                formHeading: 'நோயாளி பதிவு படிவம்',
+                nameLabel: 'பெயர்',
+                ageLabel: 'வயது',
+                genderLabel: 'பாலினம்',
+                selectOption: 'தேர்ந்தெடுக்கவும்',
+                maleOption: 'ஆண்',
+                femaleOption: 'பெண்',
+                otherOption: 'மற்றவை',
+                deptLabel: 'துறை',
+                selectDeptOption: 'தேர்ந்தெடுக்கவும்',
+                genOption: 'பொது',
+                entOption: 'காது மூக்கு தொண்டை',
+                carOption: 'இதய மருத்துவம்',
+                ortOption: 'எலும்பியல்',
+                pedOption: 'குழந்தைகள் மருத்துவம்',
+                derOption: 'தோல் மருத்துவம்',
+                neuOption: 'நரம்பியல்',
+                contactLabel: 'தொலைபேசி எண்',
+                symptomsLabel: 'அறிகுறிகள் / வருகையின் காரணம்',
+                submitBtn: 'பதிவு சமர்ப்பிக்கவும்',
+                successHeading: 'பதிவு வெற்றிகரமாக முடிந்தது!',
+                tokenLabel: 'உங்கள் டோக்கன் எண்',
+                peopleBeforeLabel: 'உங்களுக்கு முன்:',
+                refreshBtn: 'வரிசை நிலையைப் புதுப்பிக்கவும்',
+                liveQueueHeading: 'நேரலை வரிசை புதுப்பிப்புகள்',
+                registerAnotherBtn: 'மற்றொரு நோயாளியை பதிவு செய்க',
+                footerText: '© 2025 மருத்துவமனை வரிசை மேலாண்மை அமைப்பு',
+                yourTurn: '🎉 உங்கள் முறை! தயவுசெய்து ஆலோசனை அறைக்குச் செல்லவும்.',
+                youreNext: '⏳ நீங்கள் அடுத்தவர்! தயவுசெய்து தயாராக இருங்கள்.',
+                peopleBeforeYou: 'ℹ️ உங்களுக்கு முன் <strong>{{count}}</strong> பேர் உள்ளனர்.'
+            }
+        };
+
+        // Current language (default: English)
+        let currentLang = 'en';
+
+        // Initialize language from localStorage or default to English
+        function initializeLanguage() {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang && translations[savedLang]) {
+                currentLang = savedLang;
+                applyLanguage(currentLang);
+            }
+        }
+
+        // Toggle between languages
+        function toggleLanguage() {
+            // Switch between English and Tamil
+            currentLang = currentLang === 'en' ? 'ta' : 'en';
+            
+            // Save preference to localStorage
+            localStorage.setItem('preferredLanguage', currentLang);
+            
+            // Apply the new language
+            applyLanguage(currentLang);
+        }
+
+        // Apply language to all text elements
+        function applyLanguage(lang) {
+            const t = translations[lang];
+            
+            // Update language button
+            document.getElementById('langBtnText').textContent = t.langBtn;
+            
+            // Update landing section
+            document.getElementById('mainHeading').textContent = t.mainHeading;
+            document.getElementById('qrInstruction').textContent = t.qrInstruction;
+            document.getElementById('startRegBtn').textContent = t.startRegBtn;
+            
+            // Update form section
+            document.getElementById('formHeading').textContent = t.formHeading;
+            document.getElementById('nameLabel').textContent = t.nameLabel;
+            document.getElementById('ageLabel').textContent = t.ageLabel;
+            document.getElementById('genderLabel').textContent = t.genderLabel;
+            document.getElementById('selectOption').textContent = t.selectOption;
+            document.getElementById('maleOption').textContent = t.maleOption;
+            document.getElementById('femaleOption').textContent = t.femaleOption;
+            document.getElementById('otherOption').textContent = t.otherOption;
+            document.getElementById('deptLabel').textContent = t.deptLabel;
+            document.getElementById('selectDeptOption').textContent = t.selectDeptOption;
+            document.getElementById('genOption').textContent = t.genOption;
+            document.getElementById('entOption').textContent = t.entOption;
+            document.getElementById('carOption').textContent = t.carOption;
+            document.getElementById('ortOption').textContent = t.ortOption;
+            document.getElementById('pedOption').textContent = t.pedOption;
+            document.getElementById('derOption').textContent = t.derOption;
+            document.getElementById('neuOption').textContent = t.neuOption;
+            document.getElementById('contactLabel').textContent = t.contactLabel;
+            document.getElementById('symptomsLabel').textContent = t.symptomsLabel;
+            document.getElementById('submitBtn').textContent = t.submitBtn;
+            
+            // Update confirmation section
+            document.getElementById('successHeading').textContent = t.successHeading;
+            document.getElementById('tokenLabel').textContent = t.tokenLabel;
+            document.getElementById('peopleBeforeLabel').textContent = t.peopleBeforeLabel;
+            document.getElementById('refreshBtn').textContent = t.refreshBtn;
+            document.getElementById('liveQueueHeading').textContent = t.liveQueueHeading;
+            document.getElementById('registerAnotherBtn').textContent = t.registerAnotherBtn;
+            
+            // Update footer
+            document.getElementById('footerText').textContent = t.footerText;
+            
+            // Update placeholder
+            document.getElementById('contact').placeholder = lang === 'en' ? '10 digit number' : '10 இலக்க எண்';
+            
+            // Refresh queue status message if visible
+            if (document.getElementById('queueStatus').style.display !== 'none') {
+                checkQueueStatus();
+            }
+        }
+
+        // Get translated text for queue status messages
+        function getTranslatedQueueMessage(position) {
+            const t = translations[currentLang];
+            
+            if (position === 0) {
+                return `<p style="color: #4caf50; font-size: 1.2em; font-weight: bold;">${t.yourTurn}</p>`;
+            } else if (position === 1) {
+                return `<p style="color: #ff9800; font-size: 1.1em;">${t.youreNext}</p>`;
+            } else {
+                return `<p style="color: #1976d2;">${t.peopleBeforeYou.replace('{{count}}', position)}</p>`;
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // QUEUE MANAGEMENT SYSTEM (from original code)
+        // ═══════════════════════════════════════════════════════════════
+
+        let currentToken = '';
+        let currentDepartment = '';
+        let autoRefreshInterval = null;
+
+        function initializeStorage() {
+            if (!localStorage.getItem('hospitalQueue')) {
+                localStorage.setItem('hospitalQueue', JSON.stringify([]));
+            }
+        }
+
+        function scrollToForm() {
+            document.getElementById('registrationForm').classList.add('active');
+            document.getElementById('registrationForm').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+
+        function generateToken(department) {
+            const queue = JSON.parse(localStorage.getItem('hospitalQueue')) || [];
+            const deptTokens = queue.filter(patient => 
+                patient.department === department && patient.status === 'Waiting'
+            );
+            const tokenNumber = String(deptTokens.length + 1).padStart(3, '0');
+            return `${department}${tokenNumber}`;
+        }
+
+        function getQueuePosition(token, department) {
+            const queue = JSON.parse(localStorage.getItem('hospitalQueue')) || [];
+            const waitingPatients = queue.filter(patient => 
+                patient.department === department && 
+                patient.status === 'Waiting' &&
+                patient.token < token
+            );
+            return waitingPatients.length;
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const department = document.getElementById('department').value;
+            const contact = document.getElementById('contact').value;
+            const symptoms = document.getElementById('symptoms').value;
+            
+            const token = generateToken(department);
+            
+            const patient = {
+                token: token,
+                department: department,
+                name: name,
+                age: age,
+                gender: gender,
+                contact: contact,
+                symptoms: symptoms,
+                status: 'Waiting',
+                registeredAt: new Date().toISOString(),
+                timestamp: Date.now()
+            };
+            
+            const queue = JSON.parse(localStorage.getItem('hospitalQueue')) || [];
+            queue.push(patient);
+            localStorage.setItem('hospitalQueue', JSON.stringify(queue));
+            
+            currentToken = token;
+            currentDepartment = department;
+            
+            showConfirmation(token, department);
+        }
+
+        function showConfirmation(token, department) {
+            document.getElementById('registrationForm').classList.remove('active');
+            
+            const position = getQueuePosition(token, department);
+            
+            document.getElementById('tokenNumber').textContent = token;
+            document.getElementById('queuePosition').textContent = position;
+            
+            document.getElementById('confirmation').classList.add('active');
+            document.getElementById('confirmation').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+            
+            startAutoRefresh();
+        }
+
+        function checkQueueStatus() {
+            const position = getQueuePosition(currentToken, currentDepartment);
+            document.getElementById('queuePosition').textContent = position;
+            
+            const statusDiv = document.getElementById('queueStatus');
+            const statusMsg = document.getElementById('statusMessage');
+            
+            statusDiv.style.display = 'block';
+            statusMsg.innerHTML = getTranslatedQueueMessage(position);
+            
+            if (position === 0) {
+                stopAutoRefresh();
+            }
+        }
+
+        function startAutoRefresh() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+            }
+            autoRefreshInterval = setInterval(() => {
+                checkQueueStatus();
+            }, 5000);
+        }
+
+        function stopAutoRefresh() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+                autoRefreshInterval = null;
+            }
+        }
+
+        function registerAnother() {
+            stopAutoRefresh();
+            document.getElementById('patientForm').reset();
+            document.getElementById('confirmation').classList.remove('active');
+            document.getElementById('registrationForm').classList.add('active');
+            document.getElementById('registrationForm').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+
+        // Initialize everything on page load
+        window.onload = function() {
+            initializeStorage();
+            initializeLanguage(); // Initialize language preference
+        };
+
+        window.onbeforeunload = function() {
+            stopAutoRefresh();
+        };
+
+        /*
+        ═══════════════════════════════════════════════════════════════
+        INTEGRATION GUIDE FOR DOCTOR & NURSE DASHBOARDS
+        ═══════════════════════════════════════════════════════════════
+        
+        [Previous integration guide remains the same...]
+        
+        LANGUAGE INTEGRATION:
+        --------------------
+        To use the same language system in other dashboards:
+        
+        1. Copy the translations object and language functions
+        2. Add translation keys for your dashboard-specific text
+        3. Call initializeLanguage() on page load
+        4. Use applyLanguage() to update text when language changes
+        
+        Example for doctor dashboard:
+        
+        translations.en.doctorDashboard = "Doctor Dashboard";
+        translations.ta.doctorDashboard = "மருத்துவர் பலகை";
+        
+        Then in applyLanguage():
+        document.getElementById('dashboardTitle').textContent = t.doctorDashboard;
+        
+        ═══════════════════════════════════════════════════════════════
+        */
+    </script>
+</body>
+</html>
