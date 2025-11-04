@@ -629,4 +629,170 @@ Keep responses concise and helpful.`;
                 conversationHistory = [];
             };
 
-       
+            function updateGreeting() {
+                const greeting = currentUser.isLoggedIn
+                    ? `Hello ${currentUser.name}! I'm MediBot. How can I assist you with your health today?`
+                    : `Hello! I'm MediBot, your AI medical assistant. How can I help you today?`;
+                
+                const firstMsg = messages.querySelector('.medibot-message.bot .medibot-message-bubble');
+                if (firstMsg) {
+                    firstMsg.innerHTML = greeting;
+                }
+            }
+
+            // ==================== EVENT LISTENERS ====================
+            fab.addEventListener('click', toggleChat);
+            sendBtn.addEventListener('click', sendMessage);
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            // ==================== FUNCTIONS ====================
+            function toggleChat() {
+                isOpen = !isOpen;
+                window.classList.toggle('active');
+                fab.classList.toggle('active');
+                
+                if (isOpen) {
+                    input.focus();
+                    if (currentUser.isLoggedIn && conversationHistory.length === 0) {
+                        updateGreeting();
+                    }
+                }
+            }
+
+            function sendMessage() {
+                const text = input.value.trim();
+                if (!text) return;
+
+                // Validate API key
+                if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
+                    addBotMessage("⚠️ Error: Gemini API key not configured. Please add your API key in the code.");
+                    return;
+                }
+
+                addUserMessage(text);
+                input.value = '';
+                sendBtn.disabled = true;
+
+                const typingMsg = showTyping();
+
+                callGeminiAPI(text)
+                    .then(response => {
+                        typingMsg.remove();
+                        addBotMessage(response);
+                    })
+                    .catch(error => {
+                        typingMsg.remove();
+                        addBotMessage("I apologize, but I'm having trouble connecting. Please try again in a moment.");
+                        console.error('MediBot Error:', error);
+                    })
+                    .finally(() => {
+                        sendBtn.disabled = false;
+                        input.focus();
+                    });
+            }
+
+            async function callGeminiAPI(userMessage) {
+                const userContext = currentUser.isLoggedIn
+                    ? `\n\nCONTEXT: Speaking with ${currentUser.type} "${currentUser.name}" (ID: ${currentUser.id}).`
+                    : '';
+
+                const fullPrompt = SYSTEM_PROMPT + userContext + `\n\nUser: ${userMessage}\n\nAssistant:`;
+
+                const response = await fetch(GEMINI_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{ text: fullPrompt }]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            topK: 40,
+                            topP: 0.95,
+                            maxOutputTokens: 1024,
+                        }
+                    })
+                });
+
+                if (!response.ok) throw new Error(`API Error: ${response.status}`);
+
+                const data = await response.json();
+                
+                if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+                    return data.candidates[0].content.parts[0].text;
+                }
+                throw new Error('Invalid API response');
+            }
+
+            function addUserMessage(text) {
+                const div = document.createElement('div');
+                div.className = 'medibot-message user';
+                div.innerHTML = `
+                    <div class="medibot-message-avatar">👤</div>
+                    <div class="medibot-message-bubble">${escapeHtml(text)}</div>
+                `;
+                messages.appendChild(div);
+                scrollToBottom();
+                conversationHistory.push({ role: 'user', text });
+            }
+
+            function addBotMessage(text) {
+                const div = document.createElement('div');
+                div.className = 'medibot-message bot';
+                div.innerHTML = `
+                    <div class="medibot-message-avatar">🩺</div>
+                    <div class="medibot-message-bubble">${formatMessage(text)}</div>
+                `;
+                messages.appendChild(div);
+                scrollToBottom();
+                conversationHistory.push({ role: 'bot', text });
+            }
+
+            function showTyping() {
+                const div = document.createElement('div');
+                div.className = 'medibot-message bot';
+                div.innerHTML = `
+                    <div class="medibot-message-avatar">🩺</div>
+                    <div class="medibot-message-bubble">
+                        <div class="medibot-typing">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                `;
+                messages.appendChild(div);
+                scrollToBottom();
+                return div;
+            }
+
+            function formatMessage(text) {
+                text = escapeHtml(text);
+                text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                text = text.replace(/\n/g, '<br>');
+                return text;
+            }
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function scrollToBottom() {
+                messages.scrollTop = messages.scrollHeight;
+            }
+
+            // ==================== INITIALIZATION ====================
+            console.log('🩺 MediBot Widget Loaded');
+            console.log('📝 Add API key: GEMINI_API_KEY');
+            console.log('🔗 Integration: setMediBotUser(type, name, id)');
+        })();
+    </script>
+</body>
+</html>
