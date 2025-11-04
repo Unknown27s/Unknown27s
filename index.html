@@ -8,6 +8,354 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <style>
+        /* ============================================
+           MEDIBOT CHATBOT WIDGET - PURE JS VERSION
+           ============================================ */
+
+        /* Base Styles & Font */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f9fafb;
+            /* A light grey background for the demo page */
+        }
+
+        .medibot-widget * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Floating Action Button (FAB) */
+        .medibot-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+        }
+
+        .medibot-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .medibot-fab svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            position: absolute;
+        }
+
+        .medibot-fab .medibot-fab-icon-close {
+            opacity: 0;
+            transform: rotate(-90deg);
+        }
+
+        .medibot-fab.active .medibot-fab-icon-open {
+            opacity: 0;
+            transform: rotate(90deg);
+        }
+
+        .medibot-fab.active .medibot-fab-icon-close {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+
+        /* Chat Window */
+        .medibot-window {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 400px;
+            max-width: calc(100vw - 32px);
+            height: 600px;
+            max-height: calc(100vh - 120px);
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            z-index: 9999;
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .medibot-window.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: all;
+        }
+
+        /* Header */
+        .medibot-header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .medibot-header-avatar {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .medibot-header-info h3 {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .medibot-header-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #ddd6fe;
+        }
+
+        .medibot-status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: medibot-pulse 2s infinite;
+        }
+
+        @keyframes medibot-pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Messages Area */
+        .medibot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f3f4f6;
+        }
+
+        .medibot-message {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            align-items: flex-end;
+            animation: medibot-fadeIn 0.4s ease-out;
+        }
+
+        @keyframes medibot-fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .medibot-message.user {
+            flex-direction: row-reverse;
+        }
+
+        .medibot-message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .medibot-message.bot .medibot-message-avatar {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+        }
+
+        .medibot-message.user .medibot-message-avatar {
+            background: #e5e7eb;
+            color: #4b5563;
+        }
+
+        .medibot-message-bubble {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .medibot-message.bot .medibot-message-bubble {
+            background: white;
+            color: #374151;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .medibot-message.user .medibot-message-bubble {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        /* Typing Indicator */
+        .medibot-typing-bubble {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 100%;
+        }
+
+        .medibot-typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #9ca3af;
+            border-radius: 50%;
+            animation: medibot-typing 1.4s infinite ease-in-out;
+        }
+
+        .medibot-typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .medibot-typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes medibot-typing {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+            }
+
+            30% {
+                transform: translateY(-6px);
+            }
+        }
+
+        /* Warning Banner */
+        .medibot-warning {
+            background: #fef3c7;
+            padding: 12px 16px;
+            font-size: 11px;
+            color: #92400e;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            border-top: 1px solid #fde68a;
+            flex-shrink: 0;
+        }
+
+        .medibot-warning svg {
+            width: 14px;
+            height: 14px;
+            fill: #f59e0b;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* Input Area */
+        .medibot-input-area {
+            padding: 16px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .medibot-input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .medibot-input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+        }
+
+        .medibot-send-btn {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, opacity 0.2s;
+            flex-shrink: 0;
+        }
+
+        .medibot-send-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+
+        .medibot-send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .medibot-send-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .medibot-window {
+                width: 100%;
+                max-width: 100%;
+                height: 100%;
+                max-height: 100%;
+                right: 0;
+                bottom: 0;
+                border-radius: 0;
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -444,449 +792,6 @@
                 padding: 2rem 1.5rem;
             }
         }
-
-        /* ============================================
-           MEDIBOT CHATBOT WIDGET - STANDALONE VERSION
-           Copy the CSS and JS sections to integrate
-           into ANY existing HTML page
-           ============================================ */
-
-        /* Chatbot styles - isolated with medibot- prefix to avoid conflicts */
-        .medibot-widget * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Floating Circle Button */
-        .medibot-fab {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-            z-index: 99999;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none;
-        }
-
-        .medibot-fab:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-        }
-
-        .medibot-fab:active {
-            transform: scale(0.95);
-        }
-
-        .medibot-fab svg {
-            width: 28px;
-            height: 28px;
-            fill: white;
-            transition: transform 0.3s;
-        }
-
-        .medibot-fab.active svg {
-            transform: rotate(180deg);
-        }
-
-        /* Chat Window - Rectangle Box */
-        .medibot-window {
-            position: fixed;
-            bottom: 90px;
-            right: 24px;
-            width: 400px;
-            height: 600px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            z-index: 99998;
-            opacity: 0;
-            transform: scale(0.9) translateY(20px);
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .medibot-window.active {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            pointer-events: all;
-        }
-
-        /* Header */
-        .medibot-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-            border-radius: 16px 16px 0 0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .medibot-avatar {
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .medibot-info {
-            flex: 1;
-        }
-
-        .medibot-info h3 {
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
-        .medibot-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .medibot-status-dot {
-            width: 8px;
-            height: 8px;
-            background: #4ade80;
-            border-radius: 50%;
-            animation: medibot-pulse 2s infinite;
-        }
-
-        @keyframes medibot-pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        /* Messages Area */
-        .medibot-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background: #f9fafb;
-        }
-
-        .medibot-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .medibot-messages::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .medibot-messages::-webkit-scrollbar-thumb {
-            background: #d1d5db;
-            border-radius: 3px;
-        }
-
-        .medibot-message {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
-            animation: medibot-fadeIn 0.3s ease;
-        }
-
-        @keyframes medibot-fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .medibot-message.user {
-            flex-direction: row-reverse;
-        }
-
-        .medibot-message-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-
-        .medibot-message.bot .medibot-message-avatar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .medibot-message.user .medibot-message-avatar {
-            background: #e5e7eb;
-        }
-
-        .medibot-message-bubble {
-            max-width: 70%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            line-height: 1.5;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
-        .medibot-message.bot .medibot-message-bubble {
-            background: white;
-            color: #374151;
-            border-bottom-left-radius: 4px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
-
-        .medibot-message.user .medibot-message-bubble {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .medibot-typing {
-            display: flex;
-            gap: 4px;
-            padding: 8px 0;
-        }
-
-        .medibot-typing span {
-            width: 8px;
-            height: 8px;
-            background: #9ca3af;
-            border-radius: 50%;
-            animation: medibot-typing 1.4s infinite;
-        }
-
-        .medibot-typing span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .medibot-typing span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes medibot-typing {
-
-            0%,
-            60%,
-            100% {
-                transform: translateY(0);
-            }
-
-            30% {
-                transform: translateY(-8px);
-            }
-        }
-
-        /* Warning Banner */
-        .medibot-warning {
-            background: #fef3c7;
-            padding: 12px 16px;
-            font-size: 11px;
-            color: #92400e;
-            display: flex;
-            gap: 8px;
-            align-items: start;
-            border-top: 1px solid #fde68a;
-        }
-
-        .medibot-warning svg {
-            width: 14px;
-            height: 14px;
-            fill: #f59e0b;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-
-        /* Input Area */
-        .medibot-input-area {
-            padding: 16px;
-            background: white;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            gap: 8px;
-            border-radius: 0 0 16px 16px;
-        }
-
-        .medibot-input {
-            flex: 1;
-            padding: 12px 16px;
-            border: 1px solid #e5e7eb;
-            border-radius: 24px;
-            font-size: 14px;
-            outline: none;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            transition: border-color 0.2s;
-        }
-
-        .medibot-input:focus {
-            border-color: #667eea;
-        }
-
-        .medibot-send-btn {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
-            flex-shrink: 0;
-        }
-
-        .medibot-send-btn:hover:not(:disabled) {
-            transform: scale(1.05);
-        }
-
-        .medibot-send-btn:active {
-            transform: scale(0.95);
-        }
-
-        .medibot-send-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .medibot-send-btn svg {
-            width: 18px;
-            height: 18px;
-            fill: white;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .medibot-window {
-                width: calc(100vw - 32px);
-                height: calc(100vh - 120px);
-                right: 16px;
-                bottom: 80px;
-            }
-
-            .medibot-fab {
-                bottom: 16px;
-                right: 16px;
-                width: 52px;
-                height: 52px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .medibot-window {
-                width: 100vw;
-                height: 100vh;
-                right: 0;
-                bottom: 0;
-                border-radius: 0;
-            }
-
-            .medibot-header {
-                border-radius: 0;
-            }
-
-            .medibot-input-area {
-                border-radius: 0;
-            }
-        }
-
-        /* Demo page styles (remove this section when integrating) */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f3f4f6;
-        }
-
-        .demo-page {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .demo-card {
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 24px;
-        }
-
-        .demo-card h1 {
-            color: #111827;
-            margin-bottom: 16px;
-        }
-
-        .demo-card p {
-            color: #6b7280;
-            line-height: 1.6;
-            margin-bottom: 12px;
-        }
-
-        .demo-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 32px;
-        }
-
-        .demo-feature {
-            padding: 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            color: white;
-        }
-
-        .demo-feature h3 {
-            margin-bottom: 8px;
-        }
-
-        .demo-integration {
-            background: #f9fafb;
-            padding: 24px;
-            border-radius: 12px;
-            border-left: 4px solid #667eea;
-            margin-top: 24px;
-        }
-
-        .demo-integration h3 {
-            color: #667eea;
-            margin-bottom: 12px;
-        }
-
-        .demo-integration code {
-            background: #1f2937;
-            color: #10b981;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 13px;
-        }
     </style>
 </head>
 
@@ -954,24 +859,26 @@
                  MEDIBOT WIDGET - COPY FROM HERE
                  ====================================== -->
             <div class="medibot-widget">
-                <!-- Floating Action Button -->
-                <button class="medibot-fab" id="medibotFab">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <!-- Floating Button -->
+                <button class="medibot-fab" id="medibot-fab" aria-label="Toggle chat">
+                    <svg class="medibot-fab-icon-open" viewBox="0 0 24 24">
                         <path
                             d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
-                        <circle cx="9" cy="10" r="1.5" />
-                        <circle cx="15" cy="10" r="1.5" />
+                    </svg>
+                    <svg class="medibot-fab-icon-close" viewBox="0 0 24 24">
+                        <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
                     </svg>
                 </button>
 
                 <!-- Chat Window -->
-                <div class="medibot-window" id="medibotWindow">
+                <div class="medibot-window" id="medibot-window">
                     <!-- Header -->
                     <div class="medibot-header">
-                        <div class="medibot-avatar">🩺</div>
-                        <div class="medibot-info">
+                        <div class="medibot-header-avatar">🩺</div>
+                        <div class="medibot-header-info">
                             <h3>MediBot Assistant</h3>
-                            <div class="medibot-status">
+                            <div class="medibot-header-status">
                                 <span class="medibot-status-dot"></span>
                                 <span>Online</span>
                             </div>
@@ -979,180 +886,172 @@
                     </div>
 
                     <!-- Messages -->
-                    <div class="medibot-messages" id="medibotMessages">
-                        <div class="medibot-message bot">
-                            <div class="medibot-message-avatar">🩺</div>
-                            <div class="medibot-message-bubble">
-                                Hello! I'm MediBot, your AI medical assistant. I can help you with:<br><br>
-                                • Symptom analysis<br>
-                                • Treatment information<br>
-                                • Appointment guidance<br>
-                                • Hospital services<br><br>
-                                How can I assist you today?
-                            </div>
-                        </div>
+                    <div class="medibot-messages" id="medibot-messages">
+                        <!-- Initial bot message is now added dynamically via JS -->
                     </div>
 
                     <!-- Warning -->
                     <div class="medibot-warning">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <svg viewBox="0 0 24 24">
                             <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
                         </svg>
-                        <div>
-                            <strong>Disclaimer:</strong> This AI provides informational guidance only. Always consult a
-                            certified doctor for diagnosis.
-                        </div>
+                        <div><strong>Disclaimer:</strong> This AI provides informational guidance only. Always consult a
+                            certified doctor for diagnosis.</div>
                     </div>
 
                     <!-- Input -->
-                    <div class="medibot-input-area">
-                        <input type="text" class="medibot-input" id="medibotInput"
+                    <form class="medibot-input-area" id="medibot-form">
+                        <input type="text" class="medibot-input" id="medibot-input"
                             placeholder="Type your medical question..." autocomplete="off" />
-                        <button class="medibot-send-btn" id="medibotSend">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <button type="submit" class="medibot-send-btn" id="medibot-send">
+                            <svg viewBox="0 0 24 24">
                                 <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
                             </svg>
                         </button>
-                    </div>
+                    </form>
                 </div>
             </div>
-    </section>
 
-    <!-- Features Section -->
-    <section class="features">
-        <h2 class="section-title">Why Choose CareFlow?</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">📋</div>
-                <h3 class="feature-title">Easy Appointments</h3>
-                <p class="feature-description">Schedule and manage appointments with just a few clicks. Streamline your
-                    healthcare journey with our intelligent booking system.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💊</div>
-                <h3 class="feature-title">Medical Records</h3>
-                <p class="feature-description">Access your complete medical history securely anytime, anywhere. All your
-                    health data in one encrypted, easy-to-navigate platform.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🏥</div>
-                <h3 class="feature-title">24/7 Support</h3>
-                <p class="feature-description">Round-the-clock assistance for all your healthcare needs. Our dedicated
-                    team is always here to help you.</p>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="#" class="footer-link">About</a>
-                <a href="#" class="footer-link">Contact</a>
-                <a href="#" class="footer-link">Privacy Policy</a>
-                <a href="#" class="footer-link">Terms of Service</a>
-            </div>
-            <div class="copyright">© 2025 CareFlow | All Rights Reserved</div>
-        </div>
-    </footer>
 
-    <script>
-        // Smooth scroll behavior
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+            <!-- Features Section -->
+            <section class="features">
+                <h2 class="section-title">Why Choose CareFlow?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📋</div>
+                        <h3 class="feature-title">Easy Appointments</h3>
+                        <p class="feature-description">Schedule and manage appointments with just a few clicks.
+                            Streamline your
+                            healthcare journey with our intelligent booking system.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💊</div>
+                        <h3 class="feature-title">Medical Records</h3>
+                        <p class="feature-description">Access your complete medical history securely anytime, anywhere.
+                            All your
+                            health data in one encrypted, easy-to-navigate platform.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏥</div>
+                        <h3 class="feature-title">24/7 Support</h3>
+                        <p class="feature-description">Round-the-clock assistance for all your healthcare needs. Our
+                            dedicated
+                            team is always here to help you.</p>
+                    </div>
+                </div>
+            </section>
 
-        // Intersection observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+            <!-- Footer -->
+            <footer>
+                <div class="footer-content">
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">About</a>
+                        <a href="#" class="footer-link">Contact</a>
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                        <a href="#" class="footer-link">Terms of Service</a>
+                    </div>
+                    <div class="copyright">© 2025 CareFlow | All Rights Reserved</div>
+                </div>
+            </footer>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.feature-card').forEach(card => {
-            observer.observe(card);
-        });
-
-        // Counter animation for stats
-        const animateCounter = (element, target) => {
-            let current = 0;
-            const increment = target / 50;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    element.textContent = target + (element.textContent.includes('+') ? '+' : '');
-                    clearInterval(timer);
-                } else {
-                    element.textContent = Math.floor(current) + (element.textContent.includes('+') ? '+' : '');
-                }
-            }, 30);
-        };
-
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const statNumbers = entry.target.querySelectorAll('.stat-number');
-                    statNumbers.forEach(stat => {
-                        const text = stat.textContent;
-                        const hasPlus = text.includes('+');
-                        const number = parseInt(text.replace(/\D/g, ''));
-
-                        if (text.includes('k')) {
-                            stat.textContent = '0k+';
-                            let current = 0;
-                            const timer = setInterval(() => {
-                                current += 0.2;
-                                if (current >= number) {
-                                    stat.textContent = number + 'k+';
-                                    clearInterval(timer);
-                                } else {
-                                    stat.textContent = current.toFixed(1) + 'k+';
-                                }
-                            }, 30);
-                        } else if (text.includes('/')) {
-                            stat.textContent = text;
-                        } else {
-                            animateCounter(stat, number);
+            <script>
+                // Smooth scroll behavior
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
                         }
                     });
-                    statsObserver.unobserve(entry.target);
+                });
+
+                // Intersection observer for scroll animations
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, observerOptions);
+
+                document.querySelectorAll('.feature-card').forEach(card => {
+                    observer.observe(card);
+                });
+
+                // Counter animation for stats
+                const animateCounter = (element, target) => {
+                    let current = 0;
+                    const increment = target / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            element.textContent = target + (element.textContent.includes('+') ? '+' : '');
+                            clearInterval(timer);
+                        } else {
+                            element.textContent = Math.floor(current) + (element.textContent.includes('+') ? '+' : '');
+                        }
+                    }, 30);
+                };
+
+                const statsObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const statNumbers = entry.target.querySelectorAll('.stat-number');
+                            statNumbers.forEach(stat => {
+                                const text = stat.textContent;
+                                const hasPlus = text.includes('+');
+                                const number = parseInt(text.replace(/\D/g, ''));
+
+                                if (text.includes('k')) {
+                                    stat.textContent = '0k+';
+                                    let current = 0;
+                                    const timer = setInterval(() => {
+                                        current += 0.2;
+                                        if (current >= number) {
+                                            stat.textContent = number + 'k+';
+                                            clearInterval(timer);
+                                        } else {
+                                            stat.textContent = current.toFixed(1) + 'k+';
+                                        }
+                                    }, 30);
+                                } else if (text.includes('/')) {
+                                    stat.textContent = text;
+                                } else {
+                                    animateCounter(stat, number);
+                                }
+                            });
+                            statsObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                const statsSection = document.querySelector('.stats');
+                if (statsSection) {
+                    statsObserver.observe(statsSection);
                 }
-            });
-        }, { threshold: 0.5 });
+                (function () {
+                    'use strict';
 
-        const statsSection = document.querySelector('.stats');
-        if (statsSection) {
-            statsObserver.observe(statsSection);
-        }
-        (function () {
-            'use strict';
+                    // ==================== CONFIGURATION ====================
 
-            // ==================== CONFIGURATION ====================
+                    // 🔑 PASTE YOUR GEMINI API KEY HERE
+                    const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE";
 
-            // 🔑 PASTE YOUR GEMINI API KEY HERE
-            const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE";
+                    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
 
-            const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
-
-            // Medical-only system prompt
-            const SYSTEM_PROMPT = `You are MediBot, an AI medical assistant in a hospital system. 
+                    // Medical-only system prompt
+                    const SYSTEM_PROMPT = `You are MediBot, an AI medical assistant in a hospital system. 
 
 STRICT RULES:
 1. ONLY respond to medical/healthcare queries:
@@ -1173,180 +1072,180 @@ STRICT RULES:
 
 Keep responses concise and helpful.`;
 
-            // ==================== DOM ELEMENTS ====================
-            const fab = document.getElementById('medibotFab');
-            const window = document.getElementById('medibotWindow');
-            const messages = document.getElementById('medibotMessages');
-            const input = document.getElementById('medibotInput');
-            const sendBtn = document.getElementById('medibotSend');
+                    // ==================== DOM ELEMENTS ====================
+                    const fab = document.getElementById('medibotFab');
+                    const window = document.getElementById('medibotWindow');
+                    const messages = document.getElementById('medibotMessages');
+                    const input = document.getElementById('medibotInput');
+                    const sendBtn = document.getElementById('medibotSend');
 
-            // ==================== STATE ====================
-            let isOpen = false;
-            let conversationHistory = [];
+                    // ==================== STATE ====================
+                    let isOpen = false;
+                    let conversationHistory = [];
 
-            // ==================== USER SESSION (Optional) ====================
-            // Connect this to your hospital's authentication system
-            let currentUser = {
-                type: null, // 'patient' or 'doctor'
-                name: null,
-                id: null,
-                isLoggedIn: false
-            };
+                    // ==================== USER SESSION (Optional) ====================
+                    // Connect this to your hospital's authentication system
+                    let currentUser = {
+                        type: null, // 'patient' or 'doctor'
+                        name: null,
+                        id: null,
+                        isLoggedIn: false
+                    };
 
-            // Call this function after user login in your system
-            window.setMediBotUser = function (userType, userName, userId) {
-                currentUser = {
-                    type: userType,
-                    name: userName,
-                    id: userId,
-                    isLoggedIn: true
-                };
+                    // Call this function after user login in your system
+                    window.setMediBotUser = function (userType, userName, userId) {
+                        currentUser = {
+                            type: userType,
+                            name: userName,
+                            id: userId,
+                            isLoggedIn: true
+                        };
 
-                // Update greeting if chat is already open
-                if (isOpen && conversationHistory.length === 0) {
-                    updateGreeting();
-                }
-            };
-
-            // Call this on logout
-            window.clearMediBotUser = function () {
-                currentUser = {
-                    type: null,
-                    name: null,
-                    id: null,
-                    isLoggedIn: false
-                };
-                conversationHistory = [];
-            };
-
-            function updateGreeting() {
-                const greeting = currentUser.isLoggedIn
-                    ? `Hello ${currentUser.name}! I'm MediBot. How can I assist you with your health today?`
-                    : `Hello! I'm MediBot, your AI medical assistant. How can I help you today?`;
-
-                const firstMsg = messages.querySelector('.medibot-message.bot .medibot-message-bubble');
-                if (firstMsg) {
-                    firstMsg.innerHTML = greeting;
-                }
-            }
-
-            // ==================== EVENT LISTENERS ====================
-            fab.addEventListener('click', toggleChat);
-            sendBtn.addEventListener('click', sendMessage);
-            input.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage();
-                }
-            });
-
-            // ==================== FUNCTIONS ====================
-            function toggleChat() {
-                isOpen = !isOpen;
-                window.classList.toggle('active');
-                fab.classList.toggle('active');
-
-                if (isOpen) {
-                    input.focus();
-                    if (currentUser.isLoggedIn && conversationHistory.length === 0) {
-                        updateGreeting();
-                    }
-                }
-            }
-
-            function sendMessage() {
-                const text = input.value.trim();
-                if (!text) return;
-
-                // Validate API key
-                if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
-                    addBotMessage("⚠️ Error: Gemini API key not configured. Please add your API key in the code.");
-                    return;
-                }
-
-                addUserMessage(text);
-                input.value = '';
-                sendBtn.disabled = true;
-
-                const typingMsg = showTyping();
-
-                callGeminiAPI(text)
-                    .then(response => {
-                        typingMsg.remove();
-                        addBotMessage(response);
-                    })
-                    .catch(error => {
-                        typingMsg.remove();
-                        addBotMessage("I apologize, but I'm having trouble connecting. Please try again in a moment.");
-                        console.error('MediBot Error:', error);
-                    })
-                    .finally(() => {
-                        sendBtn.disabled = false;
-                        input.focus();
-                    });
-            }
-
-            async function callGeminiAPI(userMessage) {
-                const userContext = currentUser.isLoggedIn
-                    ? `\n\nCONTEXT: Speaking with ${currentUser.type} "${currentUser.name}" (ID: ${currentUser.id}).`
-                    : '';
-
-                const fullPrompt = SYSTEM_PROMPT + userContext + `\n\nUser: ${userMessage}\n\nAssistant:`;
-
-                const response = await fetch(GEMINI_API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{ text: fullPrompt }]
-                        }],
-                        generationConfig: {
-                            temperature: 0.7,
-                            topK: 40,
-                            topP: 0.95,
-                            maxOutputTokens: 1024,
+                        // Update greeting if chat is already open
+                        if (isOpen && conversationHistory.length === 0) {
+                            updateGreeting();
                         }
-                    })
-                });
+                    };
 
-                if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                    // Call this on logout
+                    window.clearMediBotUser = function () {
+                        currentUser = {
+                            type: null,
+                            name: null,
+                            id: null,
+                            isLoggedIn: false
+                        };
+                        conversationHistory = [];
+                    };
 
-                const data = await response.json();
+                    function updateGreeting() {
+                        const greeting = currentUser.isLoggedIn
+                            ? `Hello ${currentUser.name}! I'm MediBot. How can I assist you with your health today?`
+                            : `Hello! I'm MediBot, your AI medical assistant. How can I help you today?`;
 
-                if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-                    return data.candidates[0].content.parts[0].text;
-                }
-                throw new Error('Invalid API response');
-            }
+                        const firstMsg = messages.querySelector('.medibot-message.bot .medibot-message-bubble');
+                        if (firstMsg) {
+                            firstMsg.innerHTML = greeting;
+                        }
+                    }
 
-            function addUserMessage(text) {
-                const div = document.createElement('div');
-                div.className = 'medibot-message user';
-                div.innerHTML = `
+                    // ==================== EVENT LISTENERS ====================
+                    fab.addEventListener('click', toggleChat);
+                    sendBtn.addEventListener('click', sendMessage);
+                    input.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            sendMessage();
+                        }
+                    });
+
+                    // ==================== FUNCTIONS ====================
+                    function toggleChat() {
+                        isOpen = !isOpen;
+                        window.classList.toggle('active');
+                        fab.classList.toggle('active');
+
+                        if (isOpen) {
+                            input.focus();
+                            if (currentUser.isLoggedIn && conversationHistory.length === 0) {
+                                updateGreeting();
+                            }
+                        }
+                    }
+
+                    function sendMessage() {
+                        const text = input.value.trim();
+                        if (!text) return;
+
+                        // Validate API key
+                        if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
+                            addBotMessage("⚠️ Error: Gemini API key not configured. Please add your API key in the code.");
+                            return;
+                        }
+
+                        addUserMessage(text);
+                        input.value = '';
+                        sendBtn.disabled = true;
+
+                        const typingMsg = showTyping();
+
+                        callGeminiAPI(text)
+                            .then(response => {
+                                typingMsg.remove();
+                                addBotMessage(response);
+                            })
+                            .catch(error => {
+                                typingMsg.remove();
+                                addBotMessage("I apologize, but I'm having trouble connecting. Please try again in a moment.");
+                                console.error('MediBot Error:', error);
+                            })
+                            .finally(() => {
+                                sendBtn.disabled = false;
+                                input.focus();
+                            });
+                    }
+
+                    async function callGeminiAPI(userMessage) {
+                        const userContext = currentUser.isLoggedIn
+                            ? `\n\nCONTEXT: Speaking with ${currentUser.type} "${currentUser.name}" (ID: ${currentUser.id}).`
+                            : '';
+
+                        const fullPrompt = SYSTEM_PROMPT + userContext + `\n\nUser: ${userMessage}\n\nAssistant:`;
+
+                        const response = await fetch(GEMINI_API_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                contents: [{
+                                    parts: [{ text: fullPrompt }]
+                                }],
+                                generationConfig: {
+                                    temperature: 0.7,
+                                    topK: 40,
+                                    topP: 0.95,
+                                    maxOutputTokens: 1024,
+                                }
+                            })
+                        });
+
+                        if (!response.ok) throw new Error(`API Error: ${response.status}`);
+
+                        const data = await response.json();
+
+                        if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+                            return data.candidates[0].content.parts[0].text;
+                        }
+                        throw new Error('Invalid API response');
+                    }
+
+                    function addUserMessage(text) {
+                        const div = document.createElement('div');
+                        div.className = 'medibot-message user';
+                        div.innerHTML = `
                     <div class="medibot-message-avatar">👤</div>
                     <div class="medibot-message-bubble">${escapeHtml(text)}</div>
                 `;
-                messages.appendChild(div);
-                scrollToBottom();
-                conversationHistory.push({ role: 'user', text });
-            }
+                        messages.appendChild(div);
+                        scrollToBottom();
+                        conversationHistory.push({ role: 'user', text });
+                    }
 
-            function addBotMessage(text) {
-                const div = document.createElement('div');
-                div.className = 'medibot-message bot';
-                div.innerHTML = `
+                    function addBotMessage(text) {
+                        const div = document.createElement('div');
+                        div.className = 'medibot-message bot';
+                        div.innerHTML = `
                     <div class="medibot-message-avatar">🩺</div>
                     <div class="medibot-message-bubble">${formatMessage(text)}</div>
                 `;
-                messages.appendChild(div);
-                scrollToBottom();
-                conversationHistory.push({ role: 'bot', text });
-            }
+                        messages.appendChild(div);
+                        scrollToBottom();
+                        conversationHistory.push({ role: 'bot', text });
+                    }
 
-            function showTyping() {
-                const div = document.createElement('div');
-                div.className = 'medibot-message bot';
-                div.innerHTML = `
+                    function showTyping() {
+                        const div = document.createElement('div');
+                        div.className = 'medibot-message bot';
+                        div.innerHTML = `
                     <div class="medibot-message-avatar">🩺</div>
                     <div class="medibot-message-bubble">
                         <div class="medibot-typing">
@@ -1356,34 +1255,226 @@ Keep responses concise and helpful.`;
                         </div>
                     </div>
                 `;
-                messages.appendChild(div);
-                scrollToBottom();
-                return div;
-            }
+                        messages.appendChild(div);
+                        scrollToBottom();
+                        return div;
+                    }
 
-            function formatMessage(text) {
-                text = escapeHtml(text);
-                text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                text = text.replace(/\n/g, '<br>');
-                return text;
-            }
+                    function formatMessage(text) {
+                        text = escapeHtml(text);
+                        text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                        text = text.replace(/\n/g, '<br>');
+                        return text;
+                    }
 
-            function escapeHtml(text) {
-                const div = document.createElement('div');
-                div.textContent = text;
-                return div.innerHTML;
-            }
+                    function escapeHtml(text) {
+                        const div = document.createElement('div');
+                        div.textContent = text;
+                        return div.innerHTML;
+                    }
 
-            function scrollToBottom() {
-                messages.scrollTop = messages.scrollHeight;
-            }
+                    function scrollToBottom() {
+                        messages.scrollTop = messages.scrollHeight;
+                    }
 
-            // ==================== INITIALIZATION ====================
-            console.log('🩺 MediBot Widget Loaded');
-            console.log('📝 Add API key: GEMINI_API_KEY');
-            console.log('🔗 Integration: setMediBotUser(type, name, id)');
-        })();
-    </script>
+                    // ==================== INITIALIZATION ====================
+                    console.log('🩺 MediBot Widget Loaded');
+                    console.log('📝 Add API key: GEMINI_API_KEY');
+                    console.log('🔗 Integration: setMediBotUser(type, name, id)');
+                })();
+            </script>
+            <script type="module">
+                import { GoogleGenAI } from "https://aistudiocdn.com/@google/genai@^1.28.0";
+
+                // --- CONFIGURATION ---
+
+                // PASTE YOUR GEMINI API KEY HERE
+                const API_KEY = "AIzaSyCe_3sX0PA4dRh0r7s7UzWD-ys0YePULH4";
+
+                const SYSTEM_PROMPT = `You are MediBot, an AI medical assistant in a hospital system. 
+            
+                    STRICT RULES:
+                    1. ONLY respond to medical/healthcare queries:
+                       - Symptoms, diseases, conditions
+                       - Treatments, medications, procedures
+                       - Appointments, hospital services
+                       - Doctor specializations, departments
+                       - Medical tests, diagnostics
+                       - Health and wellness advice
+            
+                    2. For NON-MEDICAL queries, respond: "I'm MediBot, a medical assistant. I can only help with health-related questions. Please ask about symptoms, treatments, appointments, or hospital services."
+            
+                    3. Always add the disclaimer: "This is general information. Please consult a healthcare professional for personalized medical advice." at the end of every medical response.
+            
+                    4. For urgent symptoms (e.g., chest pain, severe bleeding, difficulty breathing, sudden weakness), immediately say: "This sounds urgent. Please seek immediate medical attention or call emergency services." and stop the conversation.
+            
+                    5. Be empathetic, clear, and use simple language. Avoid overly technical jargon.
+            
+                    6. Keep responses concise and helpful. Use formatting like bullet points (e.g., "* item") to improve readability.`;
+
+                const INITIAL_GREETING = `Hello! I'm MediBot, your AI medical assistant. I can help you with:<br><br>
+                                    &bull; Symptom analysis<br>
+                                    &bull; Treatment information<br>
+                                    &bull; Appointment guidance<br>
+                                    &bull; Hospital services<br><br>
+                                    How can I assist you today?`;
+
+                // --- DOM ELEMENTS ---
+                const fab = document.getElementById('medibot-fab');
+                const windowEl = document.getElementById('medibot-window');
+                const messagesEl = document.getElementById('medibot-messages');
+                const formEl = document.getElementById('medibot-form');
+                const inputEl = document.getElementById('medibot-input');
+                const sendBtn = document.getElementById('medibot-send');
+
+                // --- STATE ---
+                let isOpen = false;
+                let isLoading = false;
+                let isInitialized = false;
+                let chat = null;
+
+                // --- UI FUNCTIONS ---
+                function toggleChat() {
+                    isOpen = !isOpen;
+                    windowEl.classList.toggle('active');
+                    fab.classList.toggle('active');
+                    if (isOpen) {
+                        inputEl.focus();
+                    }
+                }
+
+                function scrollToBottom() {
+                    messagesEl.scrollTop = messagesEl.scrollHeight;
+                }
+
+                function escapeHtml(text) {
+                    const div = document.createElement('div');
+                    div.textContent = text;
+                    return div.innerHTML;
+                }
+
+                function formatMessageText(text) {
+                    let safeText = escapeHtml(text);
+                    // Bold: **text** -> <strong>text</strong>
+                    safeText = safeText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                    // Unordered lists: * item or - item -> &bull; item
+                    safeText = safeText.replace(/^\s*[\*-]\s+(.*)/gm, '&bull; $1');
+                    // Newlines -> <br>
+                    safeText = safeText.replace(/\n/g, '<br />');
+                    // Clean up extra breaks that might be created by the list conversion
+                    safeText = safeText.replace(/<br \/>&bull;/g, '&bull;');
+                    return safeText;
+                }
+
+                function addMessage(text, role, isFormatted = false) {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `medibot-message ${role}`;
+
+                    const avatar = role === 'bot' ? '🩺' : '👤';
+                    const messageContent = isFormatted ? text : formatMessageText(text);
+
+                    messageDiv.innerHTML = `
+                            <div class="medibot-message-avatar">${avatar}</div>
+                            <div class="medibot-message-bubble">${messageContent}</div>`;
+
+                    messagesEl.appendChild(messageDiv);
+                    scrollToBottom();
+                }
+
+                function showTypingIndicator() {
+                    const typingDiv = document.createElement('div');
+                    typingDiv.id = 'medibot-typing-indicator';
+                    typingDiv.className = 'medibot-message bot';
+                    typingDiv.innerHTML = `
+                            <div class="medibot-message-avatar">🩺</div>
+                            <div class="medibot-message-bubble">
+                                <div class="medibot-typing-bubble">
+                                    <span class="medibot-typing-dot"></span>
+                                    <span class="medibot-typing-dot"></span>
+                                    <span class="medibot-typing-dot"></span>
+                                </div>
+                            </div>`;
+                    messagesEl.appendChild(typingDiv);
+                    scrollToBottom();
+                }
+
+                function removeTypingIndicator() {
+                    const indicator = document.getElementById('medibot-typing-indicator');
+                    if (indicator) indicator.remove();
+                }
+
+                function setLoadingState(loading) {
+                    isLoading = loading;
+                    inputEl.disabled = loading;
+                    sendBtn.disabled = loading;
+                    inputEl.placeholder = loading ? "MediBot is thinking..." : "Type your medical question...";
+                }
+
+                // --- API & INITIALIZATION ---
+                async function initializeApp() {
+                    if (!API_KEY || API_KEY === "YOUR_API_KEY_HERE") {
+                        console.error("MediBot Error: API_KEY is not set.");
+                        addMessage("⚠️ I'm currently unavailable due to a configuration issue. Please add a valid API key.", 'bot');
+                        setLoadingState(true);
+                        inputEl.placeholder = "Chat unavailable";
+                        return;
+                    }
+
+                    try {
+                        const ai = new GoogleGenAI({ apiKey: API_KEY });
+                        chat = ai.chats.create({
+                            model: 'gemini-2.5-flash',
+                            config: { systemInstruction: SYSTEM_PROMPT, temperature: 0.7 }
+                        });
+                        isInitialized = true;
+                        console.log("MediBot is initialized and ready.");
+                        addMessage(INITIAL_GREETING, 'bot', true);
+                    } catch (error) {
+                        console.error("MediBot Initialization Error:", error);
+                        addMessage("⚠️ I'm having trouble starting up. Please check the API key and refresh the page.", 'bot');
+                        setLoadingState(true);
+                        inputEl.placeholder = "Initialization failed";
+                    }
+                }
+
+                async function getBotResponse(userMessage) {
+                    if (!isInitialized || !chat) {
+                        return "I'm not ready yet. Please wait a moment or refresh the page.";
+                    }
+                    try {
+                        const result = await chat.sendMessage({ message: userMessage });
+                        return result.text;
+                    } catch (error) {
+                        console.error('Gemini API Error:', error);
+                        return "I apologize, but I'm having trouble connecting. Please try again in a moment.";
+                    }
+                }
+
+                // --- EVENT HANDLERS ---
+                async function handleFormSubmit(e) {
+                    e.preventDefault();
+                    const userText = inputEl.value.trim();
+                    if (!userText || isLoading || !isInitialized) return;
+
+                    addMessage(userText, 'user');
+                    inputEl.value = '';
+                    setLoadingState(true);
+                    showTypingIndicator();
+
+                    const botResponse = await getBotResponse(userText);
+
+                    removeTypingIndicator();
+                    addMessage(botResponse, 'bot');
+                    setLoadingState(false);
+                    inputEl.focus();
+                }
+
+                // --- STARTUP ---
+                fab.addEventListener('click', toggleChat);
+                formEl.addEventListener('submit', handleFormSubmit);
+                initializeApp();
+
+            </script>
 </body>
 
 </html>
