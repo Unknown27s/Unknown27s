@@ -1,4 +1,5 @@
-- 👋 Hi, I’m @Unknown27s
+![](https://komarev.com/ghpvc/?username=Unknown27s)
+ - 👋 Hi, I’m @Unknown27s
 - 👀 I’m interested in ...Computer
 - 🌱 I’m currently learning ...Python
 - 💞️ I’m looking to collaborate on ...Github
