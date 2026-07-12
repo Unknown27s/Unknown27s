@@ -41,9 +41,11 @@ Status      : Exploring
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square\&logo=docker\&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=flat-square\&logo=postgresql)
 
-## Badges
-<!-- START_SECTION:badges-->
-<!-- END_SECTION:badges-->
+## Certifications
+
+<!-- CREDLY-BADGES:START -->
+<!-- CREDLY-BADGES:END -->
+
 
 ---
 
