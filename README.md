@@ -24,6 +24,7 @@ I build small, focused things in Linux, AI, and math — and break a lot of them
 name:        Harish Kumar
 interests:   [Linux, AI, Mathematics, Systems Design]
 learning:    Machine Learning, Systems Design
+also:        web novel reader — currently on "Shadow Slave"
 philosophy:  "Learn by building"
 editors:     [VS Code, Vim, Sublime Text]
 os:          [Linux Mint, Linux, Windows]
@@ -72,14 +73,22 @@ disclaimer:  "every line of code below was 100% written by AI — I just press e
 
 ## `~/stats`
 
+<table align="center">
+<tr>
+<td><img src="https://github-readme-stats.vercel.app/api?username=Unknown27s&show_icons=true&theme=dark&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=58A6FF&text_color=C9D1D9&card_width=420" /></td>
+<td><img src="https://github-readme-streak-stats.herokuapp.com/?user=Unknown27s&hide_border=true&background=0D1117&stroke=0D1117&ring=58A6FF&fire=58A6FF&currStreakLabel=58A6FF&card_width=420" /></td>
+</tr>
+</table>
+
 <div align="center">
-
-<img src="https://github-readme-stats.vercel.app/api?username=Unknown27s&show_icons=true&theme=dark&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=58A6FF" height="165" />
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=Unknown27s&hide_border=true&background=0D1117&stroke=0D1117&ring=58A6FF&fire=58A6FF&currStreakLabel=58A6FF" height="165" />
-
 <img src="https://github-readme-activity-graph.vercel.app/graph?username=Unknown27s&hide_border=true&bg_color=0D1117&color=58A6FF&line=58A6FF&point=FFFFFF" width="95%" />
-
 </div>
+
+<sub align="center">
+
+> if a card above looks broken or shows "0", it's not your data — `github-readme-stats` and `streak-stats` are free community-hosted services that occasionally rate-limit or sleep. refreshing the page usually fixes it.
+
+</sub>
 
 <br/>
 
@@ -99,17 +108,22 @@ disclaimer:  "every line of code below was 100% written by AI — I just press e
 
 ✦ ✦ ✦
 
-**“யாதும் ஊரே, யாவரும் கேளிர்”**
+<img src="https://raw.githubusercontent.com/Unknown27s/Unknown27s/main/assets/thirukural.svg" alt="Thirukural" />
+
 <br/>
-<sub>every town is our own, everyone is our kin — கணியன் பூங்குன்றனார்</sub>
+
+<sub><i>— திருக்குறள் (Thirukkural)</i></sub>
 
 <br/><br/>
 
-<sub>in the fog, the ones who prepare are the ones who see clearly</sub>
+<i>"Never regret thy fall,<br/>
+O Icarus of the fearless flight,<br/>
+For the greatest tragedy of them all<br/>
+Is never to feel the burning light."</i>
+
 <br/>
-<sub>the shadow doesn't trail behind — it walks a step ahead</sub>
-<br/>
-<sub><i>— in the spirit of Lord of the Mysteries & Shadow Slave</i></sub>
+
+<sub>— attributed to Oscar Wilde</sub>
 
 ✦ ✦ ✦
 
