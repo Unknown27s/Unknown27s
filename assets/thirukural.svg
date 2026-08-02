@@ -1,0 +1,89 @@
+<svg width="680" height="90" viewBox="0 0 680 90" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@500;600&display=swap');
+    .line { font-family: 'Hind Madurai', 'Noto Sans Tamil', sans-serif; font-size: 17px; fill: #C9D1D9; }
+    .tag  { font-family: 'Hind Madurai', 'Noto Sans Tamil', sans-serif; font-size: 12px; fill: #58A6FF; }
+  </style>
+
+  <!-- each kural: 2 lines of verse + "குறள் N · அதிகாரம்" tag, visible for 4s within a 40s loop (10 x 4s) -->
+
+  <!-- 1: குறள் 1 · கடவுள் வாழ்த்து -->
+  <g opacity="0">
+    <text class="line" x="340" y="30" text-anchor="middle">அகர முதல எழுத்தெல்லாம் ஆதி</text>
+    <text class="line" x="340" y="52" text-anchor="middle">பகவன் முதற்றே உலகு</text>
+    <text class="tag"  x="340" y="74" text-anchor="middle">குறள் 1 · கடவுள் வாழ்த்து</text>
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.02;0.08;0.10" dur="40s" repeatCount="indefinite" begin="0s"/>
+  </g>
+
+  <!-- 2: குறள் 391 · கல்வி -->
+  <g opacity="0">
+    <text class="line" x="340" y="30" text-anchor="middle">கற்க கசடறக் கற்பவை கற்றபின்</text>
+    <text class="line" x="340" y="52" text-anchor="middle">நிற்க அதற்குத் தக</text>
+    <text class="tag"  x="340" y="74" text-anchor="middle">குறள் 391 · கல்வி</text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.10;0.12;0.18;0.20" dur="40s" repeatCount="indefinite" begin="0s"/>
+  </g>
+
+  <!-- 3: குறள் 396 · கல்வி -->
+  <g opacity="0">
+    <text class="line" x="340" y="30" text-anchor="middle">தொட்டனைத் தூறும் மணற்கேணி மாந்தர்க்குக்</text>
+    <text class="line" x="340" y="52" text-anchor="middle">கற்றனைத் தூறும் அறிவு</text>
+    <text class="tag"  x="340" y="74" text-anchor="middle">குறள் 396 · கல்வி</text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.20;0.22;0.28;0.30" dur="40s" repeatCount="indefinite" begin="0s"/>
+  </g>
+
+  <!-- 4: குறள் 72 · அன்புடைமை -->
+  <g opacity="0">
+    <text class="line" x="340" y="30" text-anchor="middle">அன்பிலார் எல்லாம் தமக்குரியர் அன்புடையார்</text>
+    <text class="line" x="340" y="52" text-anchor="middle">என்பும் உரியர் பிறர்க்கு</text>
+    <text class="tag"  x="340" y="74" text-anchor="middle">குறள் 72 · அன்புடைமை</text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.30;0.32;0.38;0.40" dur="40s" repeatCount="indefinite" begin="0s"/>
+  </g>
+
+  <!-- 5: குறள் 786 · நட்பு -->
+  <g opacity="0">
+    <text class="line" x="340" y="30" text-anchor="middle">உடுக்கை இழந்தவன் கைபோல ஆங்கே</text>
+    <text class="line" x="340" y="52" text-anchor="middle">இடுக்கண் களைவதாம் நட்பு</text>
+    <text class="tag"  x="340" y="74" text-anchor="middle">குறள் 786 · நட்பு</text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.40;0.42;0.48;0.50" dur="40s" repeatCount="indefinite" begin="0s"/>
+  </g>
+
+  <!-- 6: குறள் 619 · ஆள்வினையுடைமை -->
+  <g opacity="0">
+    <text class="line" x="340" y="30" text-anchor="middle">தெய்வத்தான் ஆகா தெனினும் முயற்சிதன்</text>
+    <text class="line" x="340" y="52" text-anchor="middle">மெய்வருத்தக் கூலி தரும்</text>
+    <text class="tag"  x="340" y="74" text-anchor="middle">குறள் 619 · ஆள்வினையுடைமை</text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.50;0.52;0.58;0.60" dur="40s" repeatCount="indefinite" begin="0s"/>
+  </g>
+
+  <!-- 7: குறள் 400 · கல்வி -->
+  <g opacity="0">
+    <text class="line" x="340" y="30" text-anchor="middle">கேடில் விழுச்செல்வம் கல்வி ஒருவற்கு</text>
+    <text class="line" x="340" y="52" text-anchor="middle">மாடல்ல மற்றை யவை</text>
+    <text class="tag"  x="340" y="74" text-anchor="middle">குறள் 400 · கல்வி</text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.60;0.62;0.68;0.70" dur="40s" repeatCount="indefinite" begin="0s"/>
+  </g>
+
+  <!-- 8: குறள் 314 · இன்னா செய்யாமை -->
+  <g opacity="0">
+    <text class="line" x="340" y="30" text-anchor="middle">இன்னா செய்தாரை ஒறுத்தல் அவர்நாண</text>
+    <text class="line" x="340" y="52" text-anchor="middle">நன்னயம் செய்து விடல்</text>
+    <text class="tag"  x="340" y="74" text-anchor="middle">குறள் 314 · இன்னா செய்யாமை</text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.70;0.72;0.78;0.80" dur="40s" repeatCount="indefinite" begin="0s"/>
+  </g>
+
+  <!-- 9: குறள் 666 · வினைத்திட்பம் -->
+  <g opacity="0">
+    <text class="line" x="340" y="30" text-anchor="middle">எண்ணிய எண்ணியாங்கு எய்துப எண்ணியார்</text>
+    <text class="line" x="340" y="52" text-anchor="middle">திண்ணியர் ஆகப் பெறின்</text>
+    <text class="tag"  x="340" y="74" text-anchor="middle">குறள் 666 · வினைத்திட்பம்</text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.80;0.82;0.88;0.90" dur="40s" repeatCount="indefinite" begin="0s"/>
+  </g>
+
+  <!-- 10: குறள் 10 · கடவுள் வாழ்த்து -->
+  <g opacity="0">
+    <text class="line" x="340" y="30" text-anchor="middle">பிறவிப் பெருங்கடல் நீந்துவர் நீந்தார்</text>
+    <text class="line" x="340" y="52" text-anchor="middle">இறைவன் அடிசேரா தார்</text>
+    <text class="tag"  x="340" y="74" text-anchor="middle">குறள் 10 · கடவுள் வாழ்த்து</text>
+    <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.90;0.92;0.98;1" dur="40s" repeatCount="indefinite" begin="0s"/>
+  </g>
+</svg>
