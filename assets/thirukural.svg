@@ -1,8 +1,7 @@
 <svg width="680" height="90" viewBox="0 0 680 90" xmlns="http://www.w3.org/2000/svg">
   <style><![CDATA[
-    @import url('https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@500;600&display=swap');
-    .line { font-family: 'Hind Madurai', 'Noto Sans Tamil', sans-serif; font-size: 17px; fill: #C9D1D9; }
-    .tag  { font-family: 'Hind Madurai', 'Noto Sans Tamil', sans-serif; font-size: 12px; fill: #58A6FF; }
+    .line { font-family: 'Noto Sans Tamil', 'Nirmala UI', 'Tamil Sangam MN', sans-serif; font-size: 17px; fill: #C9D1D9; }
+    .tag  { font-family: 'Noto Sans Tamil', 'Nirmala UI', 'Tamil Sangam MN', sans-serif; font-size: 12px; fill: #58A6FF; }
   ]]></style>
 
   <!-- each kural: 2 lines of verse + "குறள் N · அதிகாரம்" tag, visible for 4s within a 40s loop (10 x 4s) -->
