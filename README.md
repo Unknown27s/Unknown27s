@@ -1,12 +1,20 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=24&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=520&lines=Unknown27s%40github%3A~%24+whoami;Building+with+Linux%2C+AI+%26+Mathematics;Learning+by+doing%2C+one+repo+at+a+time." alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=560&lines=Unknown27s%40github%3A~%24+whoami;Harish+Kumar+%E2%80%94+Linux+%2F+AI+%2F+Mathematics;Learning+by+building%2C+one+repo+at+a+time." alt="Typing SVG" />
+
+<br/>
 
 <img src="https://komarev.com/ghpvc/?username=Unknown27s&label=Profile%20Views&color=58A6FF&style=flat-square" />
 &nbsp;
 <img src="https://img.shields.io/badge/status-exploring-58A6FF?style=flat-square" />
+&nbsp;
+<img src="https://img.shields.io/badge/all%20code%20written%20by-AI%20(allegedly)-58A6FF?style=flat-square&logo=robotframework&logoColor=white" />
 
 </div>
+
+<br/>
+
+I build small, focused things in Linux, AI, and math — and break a lot of them first. Currently deep in machine learning and systems design, mostly because I don't know how anything works until I've taken it apart.
 
 <br/>
 
@@ -20,6 +28,7 @@ philosophy:  "Learn by building"
 editors:     [VS Code, Vim, Sublime Text]
 os:          [Linux Mint, Linux, Windows]
 shell:       bash
+disclaimer:  "every line of code below was 100% written by AI — I just press enter and take the credit 🤖"
 ```
 
 <br/>
@@ -78,9 +87,9 @@ shell:       bash
 
 <div align="center">
 
-<a href="https://linkedin.com/in/YOUR-LINKEDIN"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
-<a href="mailto:YOUR-EMAIL"><img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
-<a href="https://YOUR-PORTFOLIO-URL"><img src="https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=vercel&logoColor=white" /></a>
+<a href="https://www.linkedin.com/in/harish-kumar-johnson-248a97369/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
+<a href="mailto:harishkumarjohnson@gmail.com"><img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
+<img src="https://img.shields.io/badge/Discord-unknown__27s-5865F2?style=for-the-badge&logo=discord&logoColor=white" />
 
 </div>
 
@@ -93,6 +102,14 @@ shell:       bash
 **“யாதும் ஊரே, யாவரும் கேளிர்”**
 <br/>
 <sub>every town is our own, everyone is our kin — கணியன் பூங்குன்றனார்</sub>
+
+<br/><br/>
+
+<sub>in the fog, the ones who prepare are the ones who see clearly</sub>
+<br/>
+<sub>the shadow doesn't trail behind — it walks a step ahead</sub>
+<br/>
+<sub><i>— in the spirit of Lord of the Mysteries & Shadow Slave</i></sub>
 
 ✦ ✦ ✦
 
