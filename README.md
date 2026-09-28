@@ -47,13 +47,6 @@ disclaimer:  "every line of code below was 100% written by AI — I just press e
 ## `~/certifications`
 
 <!-- CREDLY-BADGES:START -->
-🏅 **Industry Certifications**
-
-<div align="center">
-
-
-</div>
-
 📚 **Knowledge & Learning Badges**
 
 <div align="center">
