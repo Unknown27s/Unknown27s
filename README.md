@@ -1,18 +1,4 @@
-<div align="center">
-
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=560&lines=Unknown27s%40github%3A~%24+whoami;Harish+Kumar+%E2%80%94+Linux+%2F+AI+%2F+Mathematics;Learning+by+building%2C+one+repo+at+a+time." alt="Typing SVG" />
-
-<br/>
-
-<img src="https://komarev.com/ghpvc/?username=Unknown27s&label=Profile%20Views&color=58A6FF&style=flat-square" />
-&nbsp;
-<img src="https://img.shields.io/badge/status-exploring-58A6FF?style=flat-square" />
-&nbsp;
-<img src="https://img.shields.io/badge/all%20code%20written%20by-AI%20(allegedly)-58A6FF?style=flat-square&logo=robotframework&logoColor=white" />
-
-</div>
-
-<br/>
+<div align="center"> <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0D1117,100:58A6FF&height=130&section=header" width="100%" alt="" /> <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=560&lines=Unknown27s%40github%3A~%24+whoami;Harish+Kumar+%E2%80%94+Linux+%2F+AI+%2F+Mathematics;Learning+by+building%2C+one+repo+at+a+time." alt="Typing SVG" /> <br/> <img src="https://komarev.com/ghpvc/?username=Unknown27s&label=Profile%20Views&color=58A6FF&style=flat-square" /> &nbsp; <img src="https://img.shields.io/badge/status-exploring-58A6FF?style=flat-square" /> &nbsp; <img src="https://img.shields.io/badge/all%20code%20written%20by-AI%20(allegedly)-58A6FF?style=flat-square&logo=robotframework&logoColor=white" /> </div> <br/>
 
 I build small, focused things in Linux, AI, and math — and break a lot of them first. Currently deep in machine learning and systems design, mostly because I don't know how anything works until I've taken it apart.
 
@@ -35,73 +21,39 @@ disclaimer:  "every line of code below was 100% written by AI — I just press e
 <br/>
 
 ## `~/stack`
-
-<div align="center">
-
-<img src="https://skillicons.dev/icons?i=python,ts,js,c,linux,git,docker,postgres&theme=dark" />
-
-</div>
-
-<br/>
+<div align="center"> <img src="https://skillicons.dev/icons?i=python,ts,js,c,bash&theme=dark" /> <br/> <img src="https://skillicons.dev/icons?i=linux,git,github,docker,postgres,mongodb,vim,vscode&theme=dark" /> </div> <br/> <!-- ## `~/projects` TODO: swap REPO_1 / REPO_2 / ... for your real repo names, then delete the comment markers. Lead with your best work — recruiters and visitors read this section first. <div align="center"> <a href="https://github.com/Unknown27s/REPO_1"><img src="https://github-readme-stats.vercel.app/api/pin/?username=Unknown27s&repo=REPO_1&theme=dark&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=58A6FF&text_color=C9D1D9" /></a> <a href="https://github.com/Unknown27s/REPO_2"><img src="https://github-readme-stats.vercel.app/api/pin/?username=Unknown27s&repo=REPO_2&theme=dark&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=58A6FF&text_color=C9D1D9" /></a> <a href="https://github.com/Unknown27s/REPO_3"><img src="https://github-readme-stats.vercel.app/api/pin/?username=Unknown27s&repo=REPO_3&theme=dark&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=58A6FF&text_color=C9D1D9" /></a> <a href="https://github.com/Unknown27s/REPO_4"><img src="https://github-readme-stats.vercel.app/api/pin/?username=Unknown27s&repo=REPO_4&theme=dark&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=58A6FF&text_color=C9D1D9" /></a> </div> <br/> -->
 
 ## `~/certifications`
 
-<!-- CREDLY-BADGES:START -->
-📚 **Knowledge & Learning Badges**
+<details> <summary><b>MongoDB · Networking · Cybersecurity</b> — click to expand</summary> <br/> <!-- CREDLY-BADGES:START -->
+
+📚 Knowledge & Learning Badges
 
 <div align="center">
 
-<a href="https://www.credly.com/badges/bfbd6a37-9c08-4e0a-9109-14908ac8a3dd" title="Building AI Agents with MongoDB"><img src="https://images.credly.com/size/100x100/images/252ed95c-8043-44f5-ae1f-6f5a6cf313c4/blob" alt="Building AI Agents with MongoDB" width="100" height="100"></a>
-<a href="https://www.credly.com/badges/9bdd2055-70eb-4ed7-b73a-dd41d5845410" title="Building AI-Powered Search with MongoDB Vector Search"><img src="https://images.credly.com/size/100x100/images/730e9c82-7869-4288-b580-9f8500a94465/blob" alt="Building AI-Powered Search with MongoDB Vector Search" width="100" height="100"></a>
-<a href="https://www.credly.com/badges/1ca5fc92-a55a-495a-8689-68d1be9729e1" title="Building RAG Apps Using MongoDB"><img src="https://images.credly.com/size/100x100/images/2aff887d-ee1e-479f-b26f-dcb20d647bd6/blob" alt="Building RAG Apps Using MongoDB" width="100" height="100"></a>
-<a href="https://www.credly.com/badges/fb0ca6e8-002b-47ab-919d-459b0effde25" title="Network Defense"><img src="https://images.credly.com/size/100x100/images/51526f76-711b-4caf-b04d-27f89512b112/NetworkDefense_v1_091721.png" alt="Network Defense" width="100" height="100"></a>
-<a href="https://www.credly.com/badges/dd895341-a4dd-4990-b5b8-97ebd108b007" title="Endpoint Security"><img src="https://images.credly.com/size/100x100/images/0ca5f542-fb5e-4a22-9b7a-c1a1ce4c3db7/EndpointSecurity.png" alt="Endpoint Security" width="100" height="100"></a>
-<a href="https://www.credly.com/badges/ffcf8b2c-3b5e-44ce-8e76-09302f23318d" title="AI and Innovation: How MongoDB Enables a Resilient AI Strategy"><img src="https://images.credly.com/size/100x100/images/c8a24500-d484-4e48-825a-de40b4c5c948/blob" alt="AI and Innovation: How MongoDB Enables a Resilient AI Strategy" width="100" height="100"></a>
-<a href="https://www.credly.com/badges/ab7ea6f0-cd2d-41ce-9be7-f51e72b0c722" title="Networking Devices and Initial Configuration"><img src="https://images.credly.com/size/100x100/images/88316fe8-5651-4e61-a6be-5be1558f049e/image.png" alt="Networking Devices and Initial Configuration" width="100" height="100"></a>
-<a href="https://www.credly.com/badges/c833ce3b-3d48-4bd6-90bf-602d97eb0dc8" title="MongoDB Basics for Students"><img src="https://images.credly.com/size/100x100/images/08974f21-b24f-4a0e-be9d-4ae904907259/blob" alt="MongoDB Basics for Students" width="100" height="100"></a>
-<a href="https://www.credly.com/badges/701604fe-f22d-4aa5-a995-5a4e2706ea64" title="Networking Basics"><img src="https://images.credly.com/size/100x100/images/5bdd6a39-3e03-4444-9510-ecff80c9ce79/image.png" alt="Networking Basics" width="100" height="100"></a>
-<a href="https://www.credly.com/badges/cf972c42-bbd4-4dc5-8b09-18758c0aee63" title="Introduction to Cybersecurity"><img src="https://images.credly.com/size/100x100/images/af8c6b4e-fc31-47c4-8dcb-eb7a2065dc5b/I2CS__1_.png" alt="Introduction to Cybersecurity" width="100" height="100"></a>
-<a href="https://www.credly.com/badges/bc3f4aec-b743-497e-b7f2-4b83312c09f3" title="MongoDB Overview: Core Concepts and Architecture"><img src="https://images.credly.com/size/100x100/images/0b4c54ef-b1d8-4aa7-a658-230b74dec7f6/blob" alt="MongoDB Overview: Core Concepts and Architecture" width="100" height="100"></a>
+<a href="https://www.credly.com/badges/bfbd6a37-9c08-4e0a-9109-14908ac8a3dd" title="Building AI Agents with MongoDB"><img src="https://images.credly.com/size/100x100/images/252ed95c-8043-44f5-ae1f-6f5a6cf313c4/blob" alt="Building AI Agents with MongoDB" width="100" height="100"></a> <a href="https://www.credly.com/badges/9bdd2055-70eb-4ed7-b73a-dd41d5845410" title="Building AI-Powered Search with MongoDB Vector Search"><img src="https://images.credly.com/size/100x100/images/730e9c82-7869-4288-b580-9f8500a94465/blob" alt="Building AI-Powered Search with MongoDB Vector Search" width="100" height="100"></a> <a href="https://www.credly.com/badges/1ca5fc92-a55a-495a-8689-68d1be9729e1" title="Building RAG Apps Using MongoDB"><img src="https://images.credly.com/size/100x100/images/2aff887d-ee1e-479f-b26f-dcb20d647bd6/blob" alt="Building RAG Apps Using MongoDB" width="100" height="100"></a> <a href="https://www.credly.com/badges/fb0ca6e8-002b-47ab-919d-459b0effde25" title="Network Defense"><img src="https://images.credly.com/size/100x100/images/51526f76-711b-4caf-b04d-27f89512b112/NetworkDefense_v1_091721.png" alt="Network Defense" width="100" height="100"></a> <a href="https://www.credly.com/badges/dd895341-a4dd-4990-b5b8-97ebd108b007" title="Endpoint Security"><img src="https://images.credly.com/size/100x100/images/0ca5f542-fb5e-4a22-9b7a-c1a1ce4c3db7/EndpointSecurity.png" alt="Endpoint Security" width="100" height="100"></a> <a href="https://www.credly.com/badges/ffcf8b2c-3b5e-44ce-8e76-09302f23318d" title="AI and Innovation: How MongoDB Enables a Resilient AI Strategy"><img src="https://images.credly.com/size/100x100/images/c8a24500-d484-4e48-825a-de40b4c5c948/blob" alt="AI and Innovation: How MongoDB Enables a Resilient AI Strategy" width="100" height="100"></a> <a href="https://www.credly.com/badges/ab7ea6f0-cd2d-41ce-9be7-f51e72b0c722" title="Networking Devices and Initial Configuration"><img src="https://images.credly.com/size/100x100/images/88316fe8-5651-4e61-a6be-5be1558f049e/image.png" alt="Networking Devices and Initial Configuration" width="100" height="100"></a> <a href="https://www.credly.com/badges/c833ce3b-3d48-4bd6-90bf-602d97eb0dc8" title="MongoDB Basics for Students"><img src="https://images.credly.com/size/100x100/images/08974f21-b24f-4a0e-be9d-4ae904907259/blob" alt="MongoDB Basics for Students" width="100" height="100"></a> <a href="https://www.credly.com/badges/701604fe-f22d-4aa5-a995-5a4e2706ea64" title="Networking Basics"><img src="https://images.credly.com/size/100x100/images/5bdd6a39-3e03-4444-9510-ecff80c9ce79/image.png" alt="Networking Basics" width="100" height="100"></a> <a href="https://www.credly.com/badges/cf972c42-bbd4-4dc5-8b09-18758c0aee63" title="Introduction to Cybersecurity"><img src="https://images.credly.com/size/100x100/images/af8c6b4e-fc31-47c4-8dcb-eb7a2065dc5b/I2CS__1_.png" alt="Introduction to Cybersecurity" width="100" height="100"></a> <a href="https://www.credly.com/badges/bc3f4aec-b743-497e-b7f2-4b83312c09f3" title="MongoDB Overview: Core Concepts and Architecture"><img src="https://images.credly.com/size/100x100/images/0b4c54ef-b1d8-4aa7-a658-230b74dec7f6/blob" alt="MongoDB Overview: Core Concepts and Architecture" width="100" height="100"></a>
 
-</div>
-<!-- CREDLY-BADGES:END -->
-
-<br/>
+</div> <!-- CREDLY-BADGES:END --> </details> <br/>
 
 ## `~/stats`
 
-<table align="center">
-<tr>
-<td><img src="https://github-readme-stats.vercel.app/api?username=Unknown27s&show_icons=true&theme=dark&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=58A6FF&text_color=C9D1D9&card_width=420" /></td>
-<td><img src="https://github-readme-streak-stats.herokuapp.com/?user=Unknown27s&hide_border=true&background=0D1117&stroke=0D1117&ring=58A6FF&fire=58A6FF&currStreakLabel=58A6FF&card_width=420" /></td>
-</tr>
-</table>
+<div align="center"> <table align="center"> <tr> <td><img src="https://github-readme-stats.vercel.app/api?username=Unknown27s&show_icons=true&theme=dark&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=58A6FF&text_color=C9D1D9&card_width=420" /></td> <td><img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Unknown27s&layout=compact&langs_count=8&hide_border=true&bg_color=0D1117&title_color=58A6FF&text_color=C9D1D9&card_width=420" /></td> </tr> </table> <img src="https://streak-stats.demolab.com/?user=Unknown27s&hide_border=true&background=0D1117&stroke=0D1117&ring=58A6FF&fire=58A6FF&currStreakLabel=58A6FF&currStreakNum=C9D1D9&sideNums=C9D1D9&sideLabels=C9D1D9&dates=8B949E" />
 
-<div align="center">
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=Unknown27s&hide_border=true&bg_color=0D1117&color=58A6FF&line=58A6FF&point=FFFFFF" width="95%" />
-</div>
+<br/><br/>
 
-<sub align="center">
+<picture> <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Unknown27s/Unknown27s/output/github-snake-dark.svg" /> <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Unknown27s/Unknown27s/output/github-snake.svg" /> <img alt="contribution snake eating my commits" src="https://raw.githubusercontent.com/Unknown27s/Unknown27s/output/github-snake.svg" width="95%" /> </picture>
 
-> if a card above looks broken or shows "0", it's not your data — `github-readme-stats` and `streak-stats` are free community-hosted services that occasionally rate-limit or sleep. refreshing the page usually fixes it.
+<sub><i>stat cards are free community-hosted services — if one shows "0" or looks broken, it's rate-limited, not your data. Refresh and it comes back.</i></sub>
 
-</sub>
-
-<br/>
+</div> <br/>
 
 ## `~/connect`
 
 <div align="center">
 
-<a href="https://www.linkedin.com/in/harish-kumar-johnson-248a97369/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
-<a href="mailto:harishkumarjohnson@gmail.com"><img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
-<img src="https://img.shields.io/badge/Discord-unknown__27s-5865F2?style=for-the-badge&logo=discord&logoColor=white" />
+<a href="https://www.linkedin.com/in/harish-kumar-johnson-248a97369/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" /></a> <a href="mailto:harishkumarjohnson@gmail.com"><img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a> <img src="https://img.shields.io/badge/Discord-unknown__27s-5865F2?style=for-the-badge&logo=discord&logoColor=white" />
 
-</div>
-
-<br/>
-
-<div align="center">
+</div> <br/> <div align="center">
 
 ✦ ✦ ✦
 
@@ -125,3 +77,4 @@ Is never to feel the burning light."</i>
 ✦ ✦ ✦
 
 </div>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0D1117,100:58A6FF&height=110&section=footer" width="100%" alt="" /> </div>
